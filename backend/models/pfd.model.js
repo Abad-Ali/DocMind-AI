@@ -6,6 +6,7 @@ const pdfSchema = new mongoose.Schema({
     author:{type:String},
     fileUrl:{type:String, required:true},
     publicId: {type: String, required: true},
+    extractedText:{type: String, required: false},
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
