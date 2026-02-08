@@ -7,7 +7,9 @@ const userSchema = new mongoose.Schema({
     profilePicture:{type:String, default:""}, 
     name:{type:String, default:""},
     gender:{type:String, enum:['male', 'female', 'prefer not to say'], default: 'prefer not to say'},
-    role:{type:String, enum:['user', 'admin'], default: 'user'}
+    role:{type:String, enum:['user', 'admin'], default: 'user'},
+    isVerified:{type:Boolean, default:false},
+    verificationToken:String
 }, {timestamps:true});
 
 export const User = mongoose.model('User', userSchema);
