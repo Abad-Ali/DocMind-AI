@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
+import { sendVerificationEmail, sendWelcomeEmail } from "../utils/Email.js";
 
 // REGISTER
 export const register = async(req, res)=>{
@@ -44,12 +45,18 @@ export const register = async(req, res)=>{
         // Hashing the password
         const hashedPassword = await bcrypt.hash(password, 17);
 
+        // Crteating verification Token
+        const verificationToken= Math.floor(100000 + Math.random() * 900000).toString();
+
         // Creating user
         await User.create({
             username,
             email,
             password: hashedPassword,
+            verificationToken
         });
+
+        await sendVerificationEmail(email,verificationToken);
 
         return res.status(201).json({
             message: "Account created successfully...",
@@ -75,6 +82,62 @@ export const register = async(req, res)=>{
     }
 }
 
+// Verification of Email 
+export const verifyEmail=async(req,res)=>{
+    try {
+        const {email, code}=req.body 
+
+        // If Code is missing
+        if(!code){
+            return res.status(400).json({
+                message: "Verification code is missing or not matched. Try again!",
+                success: false
+            })
+        }
+
+        // If email is missing 
+        if(!email){
+            return res.status(400).json({
+                message: "Please enter email and try again!",
+                success: false
+            })
+        }
+
+        // Find user by email first
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found", success: false });
+        }
+
+        // If email already verified
+        if (user.isVerified) {
+            return res.status(400).json({ message: "Email already verified", success: false });
+        }
+
+        // Check if token matches
+        if (user.verificationToken !== code) {
+            return res.status(400).json({ message: "Invalid or Expired Code", success: false });
+        }
+          
+        user.isVerified=true;
+        user.verificationToken=undefined;
+        await user.save();
+        await sendWelcomeEmail(user.email,user.username);
+        return res.status(200).json({
+           message:"Email Verified Successfully",
+           success:true
+        })
+           
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            message:"Internal server error",
+            success:false
+        })
+    }
+}
+
 // LOGIN
 export const login = async(req,res)=>{
     try {
@@ -97,6 +160,14 @@ export const login = async(req,res)=>{
                 message: "Incorrect email or password",
                 success: false
             })
+        }
+
+        // Prevent unverified users from logging in
+        if(!user.isVerified){
+            return res.status(403).json({
+                message: "Please verify your email before logging in.",
+                success: false
+            });
         }
  
         // Checking if password is correct or not 
