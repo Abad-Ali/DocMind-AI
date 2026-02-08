@@ -2,6 +2,7 @@ import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
 import { PDF } from "../models/pfd.model.js";
 import mongoose from 'mongoose';
+import extractPdfText from "../utils/extractPdfText.js";
 
 //UPLOAD PDF'S
 export const uploadPDF = async(req,res)=>{
@@ -34,12 +35,16 @@ export const uploadPDF = async(req,res)=>{
             unique_filename: false
         });
 
+        // Extract text from uploaded PDF
+        const extractedText = await extractPdfText(cloudResponse.secure_url);
+
         const pdf = await PDF.create({
             title,
             description,
             author,
             fileUrl: cloudResponse.secure_url,
             publicId: cloudResponse.public_id,
+            extractedText,
             uploadedBy: req.user.id
         });
         
@@ -54,7 +59,8 @@ export const uploadPDF = async(req,res)=>{
                 fileUrl: pdf.fileUrl,
                 uploadedBy: pdf.uploadedBy,
                 uploadedAt: pdf.createdAt
-            }
+            },
+            extractedText: extractedText
         })
     } catch (error) {
         console.error("PDF upload error:", error);
@@ -315,3 +321,31 @@ export const downloadPDF = async(req,res)=>{
         });
     }
 }
+
+
+// it is not a a route — it’s just a function ---> NOT USING
+export const testPdfExtraction = async (req, res) => {
+  try {
+    const { pdfId } = req.params;
+
+    const pdf = await PDF.findById(pdfId);
+    if (!pdf) {
+      return res.status(404).json({
+        success: false,
+        message: "PDF not found",
+      });
+    }
+
+    const text = await extractPdfText(pdf.fileUrl);
+
+    return res.status(200).json({
+      success: true,
+      textPreview: text.slice(0, 1000), // only preview
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
