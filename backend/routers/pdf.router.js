@@ -3,6 +3,7 @@ import isAuthenticated from '../middlewares/isAuthenticated.js';
 import isAdmin from '../middlewares/isAdmin.js';
 import { deletePDF, downloadPDF, editPDF, getLatestPDFs, getUploadedPDFs, searchPDF, testPdfExtraction, uploadPDF } from '../controllers/pdf.controller.js';
 import upload from '../middlewares/multer.js';
+import { generateQuestions, generateSummary } from '../controllers/ai.controller.js';
 
 const router = express.Router();
 
@@ -14,5 +15,7 @@ router.route('/getuploaded').get(isAuthenticated, isAdmin, getUploadedPDFs);
 router.route('/search').get(isAuthenticated, searchPDF);
 router.route('/download/:pdfId').get(isAuthenticated, downloadPDF);
 router.route('/extract/:pdfId').get(isAuthenticated, testPdfExtraction);
+router.route('/:pdfId/summary').post(isAuthenticated, generateSummary);
+router.route('/:pdfId/questions').post(isAuthenticated, generateQuestions);
 
 export default router
