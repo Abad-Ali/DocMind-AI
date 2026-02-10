@@ -349,3 +349,32 @@ export const testPdfExtraction = async (req, res) => {
     });
   }
 };
+
+// TO GET PDF 
+export const getPDF = async(req,res)=>{
+    try {
+        const { pdfId } = req.params
+
+        // Finding the pdf by ID
+        const pdf = await PDF.findById(pdfId).select('-publicId');
+
+        // Tf pdf not found
+        if (!pdf) {
+          return res.status(404).json({
+            success: false,
+            message: "PDF not found",
+          });
+        }
+
+        return res.status(200).json({
+            success: true,
+            pdf
+        })
+    } catch (error) {
+        console.error("Error fetching PDF:", error);
+        return res.status(500).json({
+          message: "Failed to fetch PDF",
+          success: false
+        });
+    }
+}
