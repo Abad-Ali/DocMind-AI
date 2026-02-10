@@ -399,3 +399,73 @@ export const changePassword = async(req,res)=>{
         })
     }
 }
+
+// BECOME ADMIN
+export const beAdmin = async(req,res)=>{
+    try {
+        const userId = req.user.id;
+        const { password, adminKey } = req.body;
+
+        // IF user doesn't have adminKey, user can not become admin
+        if(adminKey !== process.env.ADMIN_KEY){
+            return res.status(403).json({ 
+                message: "Invalid admin key.", 
+                success: false 
+            })
+        }
+
+        // If password is missing
+        if (!password) {
+            return res.status(400).json({ 
+                message: "Password is required", 
+                success: false 
+            })
+        }
+
+        // Finding the user by ID
+        const user = await User.findById(userId);
+        if(!user){
+            return res.status(404).json({
+                message:'User not found.',
+                success:false
+            })
+        }
+
+        // If already an asmin
+        if(user.role === "admin"){
+            return res.status(400).json({
+                message: "You are already an admin.",
+                success: false
+            })
+        }
+
+        // Checking if password is correct or not 
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        if(!isPasswordMatch){
+            return res.status(400).json({
+                message:"Please enter the correct password.",
+                success: false
+            })
+        }
+
+        // Changing the role of the admin
+        user.role = "admin";
+        // Saving the change in DB
+        await user.save();
+
+        // Remove password before sending response
+        const { password:_, ...userData } = user._doc;
+
+        return res.status(200).json({
+            message: "Congrulations you are now an Admin.",
+            success: true,
+            user: userData
+        })
+    } catch (error) {
+        console.error("Error in becoming admin:", error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        })
+    }
+}
