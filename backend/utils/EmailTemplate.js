@@ -173,3 +173,63 @@ export const Welcome_Email_Template = `
   </body>
   </html>
 `;
+
+
+
+export const AI_Summary_AND_QA_Email_Template = ({ userName, pdfTitle, summary, questions }) => `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your AI Summary & Questions</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f4f4; color:#333; }
+  .container { max-width:600px; margin:30px auto; background:#fff; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.1); overflow:hidden; border:1px solid #ddd; }
+  .header { background-color: #4CAF50; color:white; padding:20px; text-align:center; font-size:26px; font-weight:bold; }
+  .content { padding:25px; line-height:1.8; }
+  .intro { margin-bottom:20px; }
+  .summary { background:#e8f5e9; padding:15px; border-radius:5px; margin-bottom:20px; }
+  .question { margin-bottom:15px; }
+  .question-title { font-weight:bold; }
+  .answer { background:#f0f0f0; padding:10px; border-radius:5px; margin-top:5px; }
+  .button { display:inline-block; padding:12px 25px; margin:20px 0; background-color:#4CAF50; color:white; text-decoration:none; border-radius:5px; text-align:center; font-size:16px; font-weight:bold; transition: background-color 0.3s; }
+  .button:hover { background-color:#45a049; }
+  .footer { background:#f4f4f4; padding:15px; text-align:center; color:#777; font-size:12px; border-top:1px solid #ddd; }
+  a { color:#4CAF50; text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    DocMind AI
+  </div>
+  <div class="content">
+    <p class="intro">Hello ${userName},</p>
+    <p>This email is from <strong>DocMind AI</strong> (<a href="https://your-site.com" target="_blank">your-site.com</a>), your AI-powered PDF assistant.</p>
+
+    <p>Here is the AI-generated summary and questions for your PDF: <strong>${pdfTitle}</strong></p>
+
+    <h3>Summary:</h3>
+    <div class="summary">${summary}</div>
+
+    <h3>Questions & Answers:</h3>
+    ${questions.map(q => `
+      <div class="question">
+        <div class="question-title">Q: ${q.question}</div>
+        <div class="answer">A: ${q.answer}</div>
+      </div>
+    `).join('')}
+
+    <a href="https://your-site.com" class="button">View More PDFs on DocMind AI</a>
+
+    <p>Thank you for using <strong>DocMind AI</strong>! Keep exploring AI-generated insights for your documents.</p>
+  </div>
+  <div class="footer">
+    &copy; ${new Date().getFullYear()} DocMind AI. All rights reserved. <br/>
+    Visit us: <a href="https://your-site.com" target="_blank">your-site.com</a>
+  </div>
+</div>
+</body>
+</html>
+`;
