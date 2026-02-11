@@ -178,3 +178,115 @@ export const generateQuestions = async(req,res)=>{
         });
     }
 }
+
+// TO ENHANCE THE TITLE
+export const enhanceTitle = async(req,res)=>{
+    try {
+        const { title } = req.body;
+
+        // Validate title
+        if(!title || title.trim() === ""){
+            return res.status(400).json({
+                message: "Please enter the title first",
+                success: false
+            })
+        }
+
+        // If title too long
+        if (title.length > 200) {
+          return res.status(400).json({
+            message: "Title is too long",
+            success: false
+          });
+        }
+
+        //AI  prompt
+        const prompt = `
+           You are a professional title editor.
+           
+           Your task is to improve the clarity and professionalism of the given title.
+           
+           Return ONLY the improved title text.
+           Do not include explanations.
+           
+           Title:
+           """${title}"""
+        `;
+
+        // Call AI model
+        const aiEnhanceTitle  = await generateText(prompt);
+
+
+        return res.status(200).json({
+            message:"Title enhanced by AI successfully",
+            success: true,
+            aiEnhanceTitle
+        })
+        
+    } catch (error) {
+        console.error("Title Enhance error:", error);
+        return res.status(500).json({
+          message: "Failed to enhance the title of the PDF",
+          success: false
+        });
+    }
+}
+
+// TO ENHANCE THE DESCRIPTION
+export const enhanceDescription= async(req,res)=>{
+    try {
+        const { description } = req.body;
+
+        // Validate description
+        if(!description || description.trim() === ""){
+            return res.status(400).json({
+                message: "Please enter the description first",
+                success: false
+            })
+        }
+
+        // If description too long
+        if (description.length > 500) {
+          return res.status(400).json({
+            message: "Description is too long",
+            success: false
+          });
+        }
+
+        //AI  prompt
+        const prompt = `
+           You are a professional copywriter.
+           
+           Rewrite the following description to make it clear, professional, and well-structured.
+           
+           Rules:
+           - Preserve the original meaning
+           - Improve clarity and flow
+           - Make it concise but impactful
+           - Use professional tone
+           - Return ONLY plain text
+           - Do NOT add headings or markdown
+           - Do NOT add explanations
+           
+           Description:
+           """${description}"""
+        `;
+
+        // Call AI model
+        const aiEnhanceDescription  = await generateText(prompt);
+
+
+        return res.status(200).json({
+            message:"Description enhanced by AI successfully",
+            success: true,
+            aiEnhanceDescription
+        })
+        
+    } catch (error) {
+        console.error("Description Enhance error:", error);
+        return res.status(500).json({
+          message: "Failed to enhance the description of the PDF",
+          success: false
+        });
+    }
+}
