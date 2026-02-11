@@ -3,6 +3,8 @@ import cloudinary from "../utils/cloudinary.js";
 import { PDF } from "../models/pfd.model.js";
 import mongoose from 'mongoose';
 import extractPdfText from "../utils/extractPdfText.js";
+import { User } from "../models/user.model.js";
+import { sendAISummaryandQAEmail } from "../utils/Email.js";
 
 //UPLOAD PDF'S
 export const uploadPDF = async(req,res)=>{
@@ -374,6 +376,44 @@ export const getPDF = async(req,res)=>{
         console.error("Error fetching PDF:", error);
         return res.status(500).json({
           message: "Failed to fetch PDF",
+          success: false
+        });
+    }
+}
+
+// To SEND AISUMMARY AND QUESTIONS AND ANSWERS ON EMAIL
+export const sendEmail = async(req,res)=>{
+    try {
+        const userId = req.user.id;
+        const { pdfId } = req.params;
+
+        const user = await User.findById(userId).select('-password');
+        const pdf = await PDF.findById(pdfId).select('-publicId');
+
+        // Tf pdf not found
+        if (!pdf) {
+          return res.status(404).json({
+            success: false,
+            message: "PDF not found",
+          })
+        }
+
+        if (!pdf.aiSummary || !pdf.aiQuestions || pdf.aiQuestions.length === 0) {
+          return res.status(400).json({
+            message: "Please first generate AI summary and AI Questions",
+            success: false
+          })
+        }
+
+        await sendAISummaryandQAEmail(user.email, user.username, pdf.title, pdf.aiSummary, pdf.aiQuestions)
+        return res.status(200).json({
+            message:"AI Summary & Questions emailed successfully!",
+            success: true
+        })
+    } catch (error) {
+        console.error("Error in sending summary and questions and answers to user email:", error);
+        return res.status(500).json({
+          message: "Failed to send summary and questions and answers to user email.",
           success: false
         });
     }
