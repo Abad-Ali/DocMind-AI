@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     name:{type:String, default:""},
     gender:{type:String, enum:['male', 'female', 'prefer not to say'], default: 'prefer not to say'},
     role:{type:String, enum:['user', 'admin'], default: 'user'},
+    bookmarks:[{type:mongoose.Schema.Types.ObjectId, ref:'PDF'}],
     isVerified:{type:Boolean, default:false},
     verificationToken:String
 }, {timestamps:true});
