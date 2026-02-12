@@ -326,6 +326,52 @@ export const getUserProfile = async(req,res)=>{
     }
 }
 
+// TO GET USER PROFILE 
+export const getProfile = async(req,res)=>{
+    try {
+        const userId = req.user.id;
+
+        // Finding the user by using ID
+        const user = await User.findById(userId).select("-password");
+
+        // If user not found
+        if(!user){
+            return res.status(404).json({
+                message:'User not found.',
+                success:false
+            });
+        }
+
+        // Finding pdfs that are in bookmark array
+        const pdfs = await PDF.find({ _id: { $in: user.bookmarks } }).sort({ createdAt: -1 }).populate("uploadedBy", "username profilePicture role");
+
+        const pdfsWithPreview = pdfs.map(pdf => ({
+            id: pdf._id.toString(),
+            title: pdf.title,
+            description: pdf.description,
+            author: pdf.author,
+            uploadedBy: pdf.uploadedBy,
+            fileUrl: pdf.fileUrl,
+            previewUrl: pdf.fileUrl
+                ? pdf.fileUrl.replace("/upload/", "/upload/pg_1/")
+                : null
+        }))
+
+        return res.status(200).json({
+            success: true,
+            user,
+            bookmarks: pdfsWithPreview
+        })
+
+    } catch (error) {
+        console.error("GET PROFILE error:", error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        });
+    }
+}
+
 // CHANGE PASSWORD
 export const changePassword = async(req,res)=>{
     try {
