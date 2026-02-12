@@ -418,3 +418,51 @@ export const sendEmail = async(req,res)=>{
         });
     }
 }
+
+// BOOKMARK PDF
+export const bookmarkPDF = async(req,res)=>{
+    try {
+        const { pdfId } = req.params;
+        const userId = req.user.id;
+
+        const pdf = await PDF.findById(pdfId);
+        if(!pdf){
+            return res.status(404).json({
+                message:'PDF not found.',
+                success:false
+            });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+          return res.status(404).json({
+            message: 'User not found.',
+            success: false
+          });
+        }
+
+        if(user.bookmarks.includes(pdf._id)){
+            // already bookmarked ---->  remove it 
+            await user.updateOne({$pull:{bookmarks:pdf._id}});
+            await user.save();
+            return res.status(200).json({
+                message:'PDF removed from bookmarks',
+                success:true
+            });
+        }else{
+            // bookmarked the pdf
+            await user.updateOne({$addToSet:{bookmarks:pdf._id}});
+            await user.save();
+            return res.status(200).json({
+                message:'PDF bookmarked successfully',
+                success:true
+            });
+        }
+    } catch (error) {
+        console.error('Error in bookmark PDF:', error);
+        return res.status(500).json({
+          message: 'Failed to toggle bookmark',
+          success: false
+        });
+    }
+} 
