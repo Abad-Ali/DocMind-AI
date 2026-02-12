@@ -1,7 +1,7 @@
 import express from 'express';
 import isAuthenticated from '../middlewares/isAuthenticated.js';
 import isAdmin from '../middlewares/isAdmin.js';
-import { deletePDF, downloadPDF, editPDF, getLatestPDFs, getPDF, getUploadedPDFs, searchPDF, sendEmail, testPdfExtraction, uploadPDF } from '../controllers/pdf.controller.js';
+import { bookmarkPDF, deletePDF, downloadPDF, editPDF, getLatestPDFs, getPDF, getUploadedPDFs, searchPDF, sendEmail, testPdfExtraction, uploadPDF } from '../controllers/pdf.controller.js';
 import upload from '../middlewares/multer.js';
 import { enhanceDescription, enhanceTitle, generateQuestions, generateSummary } from '../controllers/ai.controller.js';
 
@@ -17,6 +17,7 @@ router.route('/download/:pdfId').get(isAuthenticated, downloadPDF);
 router.route('/extract/:pdfId').get(isAuthenticated, testPdfExtraction);
 router.route('/getpdf/:pdfId').get(isAuthenticated, getPDF);
 router.route('/:pdfId/sendemail').post(isAuthenticated, sendEmail);
+router.route('/:pdfId/bookmark').get(isAuthenticated, bookmarkPDF);
 // AI features routes
 router.route('/:pdfId/summary').post(isAuthenticated, generateSummary);
 router.route('/:pdfId/questions').post(isAuthenticated, generateQuestions);
