@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+
+const chunkSchema = new mongoose.Schema(
+  {
+    text: { type: String, required: true },
+    // embedding: { type: [Number], default: [] }, //  for future embeddings
+    chunkNumber: { type: Number } // optional but to  preserves order
+  },
+  { _id: false }
+);
+
 const questionSchema = new mongoose.Schema(
   {
     question: { type: String, required: true },
@@ -15,6 +25,7 @@ const pdfSchema = new mongoose.Schema({
     fileUrl:{type:String, required:true},
     publicId: {type: String, required: true},
     extractedText:{type: String, required: false},
+    chunks: {type: [chunkSchema], default: []},
     aiSummary: {type: String},
     aiQuestions: {
       type: [questionSchema],

@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import extractPdfText from "../utils/extractPdfText.js";
 import { User } from "../models/user.model.js";
 import { sendAISummaryandQAEmail } from "../utils/Email.js";
+import { pdfChunks } from "../utils/pdfChunks.js";
 
 //UPLOAD PDF'S
 export const uploadPDF = async(req,res)=>{
@@ -47,6 +48,7 @@ export const uploadPDF = async(req,res)=>{
             fileUrl: cloudResponse.secure_url,
             publicId: cloudResponse.public_id,
             extractedText,
+            chunks: pdfChunks(extractedText),
             uploadedBy: req.user.id
         });
         

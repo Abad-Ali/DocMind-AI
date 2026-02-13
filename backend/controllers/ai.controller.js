@@ -31,6 +31,16 @@ export const generateSummary = async(req,res)=>{
             })
         }
 
+        // IF PDF IS TOO LONG 
+        const MAX_CHARACTERS = 3000; // depends on API token limit
+        if (pdf.extractedText.length > MAX_CHARACTERS) {
+          return res.status(400).json({
+            message: "PDF is too long to generate summary with the free AI API",
+            success: false
+          });
+        }
+
+
         // this avoids unnecessary AI calls and reduces cost + latency
         if(pdf.aiSummary){
             await fakeDelay(1500);
@@ -104,6 +114,14 @@ export const generateQuestions = async(req,res)=>{
                 message: "PDF not found...",
                 success: false
             })
+        }
+
+        const MAX_CHARACTERS = 3000; // depends on API token limit
+        if (pdf.extractedText.length > MAX_CHARACTERS) {
+          return res.status(400).json({
+            message: "PDF is too long to generate questions with the free AI API",
+            success: false
+          });
         }
 
         // this avoids unnecessary AI calls and reduces cost + latency
@@ -322,21 +340,36 @@ export const chatWithAIPDF = async(req,res)=>{
             })
         }
 
+        // pdf: your PDF document with chunks
+        // question: student's question
+        const getRelevantChunks = (pdf, question, top = 3) => {
+          const lowerQ = question.toLowerCase();
+          
+          // Filter chunks that contain any keyword from question
+          const filtered = pdf.chunks.filter(chunk => 
+            chunk.text.toLowerCase().includes(lowerQ)
+          );
+        
+          // If none match, fallback to first 3 chunks
+          if (filtered.length === 0) return pdf.chunks.slice(0, top);
+        
+          return filtered.slice(0, top);
+        };
+
+        const chunks = getRelevantChunks(pdf, question);
+
         const prompt = `
-            You are an AI tutor.
-
-            Use the provided PDF context to understand the topic.
-            Explain the concept clearly in your own words for the question from student.
-            
-            Do NOT copy sentences directly.
-            Do NOT add information that is not supported by the context.
-            
-            If the topic is not discussed in the context, say:
-            "Topic not found in this PDF".
-
-            PDF context : ${pdf.extractedText} and 
-            student Question : ${question}
+           You are an AI tutor.
+           Use the provided PDF chunks to answer the student's question.
+           Explain clearly in your own words.
+           Do NOT add information not in the context.
+           
+           PDF Chunks:
+           ${chunks.map(c => c.text).join("\n\n")}
+           
+           Student Question: ${question}
         `;
+        // console.log(chunks);
 
         // This will call the api of model as per prompt
         const aiResponse = await generateText(prompt);
