@@ -3,7 +3,7 @@ import isAuthenticated from '../middlewares/isAuthenticated.js';
 import isAdmin from '../middlewares/isAdmin.js';
 import { bookmarkPDF, deletePDF, downloadPDF, editPDF, getLatestPDFs, getPDF, getUploadedPDFs, searchPDF, sendEmail, testPdfExtraction, uploadPDF } from '../controllers/pdf.controller.js';
 import upload from '../middlewares/multer.js';
-import { enhanceDescription, enhanceTitle, generateQuestions, generateSummary } from '../controllers/ai.controller.js';
+import { chatWithAIPDF, enhanceDescription, enhanceTitle, generateQuestions, generateSummary } from '../controllers/ai.controller.js';
 
 const router = express.Router();
 
@@ -22,6 +22,7 @@ router.route('/:pdfId/bookmark').get(isAuthenticated, bookmarkPDF);
 router.route('/:pdfId/summary').post(isAuthenticated, generateSummary);
 router.route('/:pdfId/questions').post(isAuthenticated, generateQuestions);
 router.route('/enhance-title').post(isAuthenticated, isAdmin, enhanceTitle);
-router.route('/enhance-desc').post(isAuthenticated, isAdmin, enhanceDescription);
+router.route('/enhance-title').post(isAuthenticated, isAdmin, enhanceTitle);
+router.route('/:pdfId/chat').post(isAuthenticated, chatWithAIPDF);
 
 export default router
