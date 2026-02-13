@@ -290,3 +290,67 @@ export const enhanceDescription= async(req,res)=>{
         });
     }
 }
+
+// Chat with PDF 
+export const chatWithAIPDF = async(req,res)=>{
+    try {
+        const {pdfId} = req.params;
+        const {question} = req.body;
+
+        if(!question || question.trim() === ""){
+            return res.status(400).json({
+                message:"Please enter your question",
+                success:false
+            })
+        }
+
+        if(question.length> 100) {
+          return res.status(400).json({
+            message: "Question is too long",
+            success: false
+          });
+        }
+
+        // Finding the pdf by using id 
+        const pdf = await PDF.findById(pdfId);
+
+        // IF pdf not found
+        if(!pdf){
+            return res.status(404).json({
+                message: "PDF not found...",
+                success: false
+            })
+        }
+
+        const prompt = `
+            You are an AI tutor.
+
+            Use the provided PDF context to understand the topic.
+            Explain the concept clearly in your own words for the question from student.
+            
+            Do NOT copy sentences directly.
+            Do NOT add information that is not supported by the context.
+            
+            If the topic is not discussed in the context, say:
+            "Topic not found in this PDF".
+
+            PDF context : ${pdf.extractedText} and 
+            student Question : ${question}
+        `;
+
+        // This will call the api of model as per prompt
+        const aiResponse = await generateText(prompt);
+
+        return res.status(200).json({
+            message:"AI generated answer successfully",
+            success: true,
+            aiResponse
+        })
+    } catch (error) {
+        console.error("Error in chat with PDF:", error);
+        return res.status(500).json({
+          message: "Failed to chat with PDF",
+          success: false
+        });
+    }
+}
