@@ -51,7 +51,7 @@ const LoginPage = () => {
     }
   return (
     <div className='flex justify-center items-center bg-black text-white w-screen h-screen overflow-hidden'>
-        <div className='text-center border-2 border-slate-500 rounded-lg px-7 py-5 w-lg h-xl mx-2 mb-10 md:mb-0'>
+        <div className='text-center border-2 border-slate-500 rounded-lg px-7 py-5 w-sm h-xl mx-2 mb-10 md:mb-0'>
             <div className='flex justify-center items-center my-3'>
                 <Image src='/docmindai_logo.png' alt='logo' height={200} width={200}/>
             </div>
@@ -60,11 +60,11 @@ const LoginPage = () => {
             <form onSubmit={signupHandler} className='my-2 flex flex-col gap-3'>
                 <div className='flex flex-col gap-1'>
                     <Label htmlFor="email" className='text-[18px] font-serif'>Email address :</Label>
-                    <Input type="email" name="email" value={input.email} onChange={handleChange} id='email' required placeholder="docmindai@gmail.com"/>
+                    <Input type="email" name="email" value={input.email} onChange={handleChange} id='email' className='bg-white' required placeholder="docmindai@gmail.com"/>
                 </div>
                 <div className='flex flex-col gap-1'>
                     <Label htmlFor="password" className='text-[18px] font-serif'>Password :</Label>
-                    <Input type="password" name="password" value={input.password} onChange={handleChange} id='password' required placeholder="Enter your password"/>
+                    <Input type="password" name="password" value={input.password} onChange={handleChange} id='password' className='bg-white' required placeholder="Enter your password"/>
                 </div>
 
                 {/* <button type="submit" className='bg-blue-700 p-2 my-3 rounded-lg font-semibold cursor-pointer'>Signup</button> */}
