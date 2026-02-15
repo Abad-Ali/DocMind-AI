@@ -7,9 +7,14 @@ import Image from 'next/image'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "sonner";
+import { setAuthUser } from '../redux/authSlice';
 
 const LoginPage = () => {
+    const {user} = useSelector((store)=>store.auth);
+    const dispatch = useDispatch();
+
     const [loading, setloading] = useState(false);
     const [input, setInput] = useState({
         email:"",
@@ -35,6 +40,7 @@ const LoginPage = () => {
             });
 
             if(res.data.success){
+                dispatch(setAuthUser(res.data.user));
                 router.replace('/');
                 toast.success(res.data.message);
                 setInput({
@@ -60,11 +66,11 @@ const LoginPage = () => {
             <form onSubmit={signupHandler} className='my-2 flex flex-col gap-3'>
                 <div className='flex flex-col gap-1'>
                     <Label htmlFor="email" className='text-[18px] font-serif'>Email address :</Label>
-                    <Input type="email" name="email" value={input.email} onChange={handleChange} id='email' className='bg-white' required placeholder="docmindai@gmail.com"/>
+                    <Input type="email" name="email" value={input.email} onChange={handleChange} id='email' className='bg-white text-black' required placeholder="docmindai@gmail.com"/>
                 </div>
                 <div className='flex flex-col gap-1'>
                     <Label htmlFor="password" className='text-[18px] font-serif'>Password :</Label>
-                    <Input type="password" name="password" value={input.password} onChange={handleChange} id='password' className='bg-white' required placeholder="Enter your password"/>
+                    <Input type="password" name="password" value={input.password} onChange={handleChange} id='password' className='bg-white text-black' required placeholder="Enter your password"/>
                 </div>
 
                 {/* <button type="submit" className='bg-blue-700 p-2 my-3 rounded-lg font-semibold cursor-pointer'>Signup</button> */}
@@ -80,7 +86,7 @@ const LoginPage = () => {
                     ):(
                         <button type="submit" className='bg-blue-700 p-2 mt-3 rounded-lg font-semibold cursor-pointer flex justify-center items-center gap-2 hover:bg-blue-800'>
                             <LogIn size={20}/>
-                            Signup
+                            Login
                         </button>
 
                     )

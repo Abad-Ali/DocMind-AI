@@ -61,11 +61,11 @@ const verifyEmailHandler = async(e)=>{
             <form onSubmit={verifyEmailHandler} className='my-2 flex flex-col gap-3'>
                 <div className='flex flex-col gap-1'>
                     <Label htmlFor="email" className='text-[18px] font-serif'>Email address :</Label>
-                    <Input type="email" name="email" value={input.email} onChange={handleChange} id='email' className='bg-white' required placeholder="docmindai@gmail.com"/>
+                    <Input type="email" name="email" value={input.email} onChange={handleChange} id='email' className='bg-white text-black' required placeholder="docmindai@gmail.com"/>
                 </div>
                 <div className='flex flex-col gap-1'>
                     <Label htmlFor="code" className='text-[18px] font-serif'>Verification code :</Label>
-                    <Input type="code" name="code" value={input.code} onChange={handleChange} id='code' className='bg-white' required placeholder="Enter verification code"/>
+                    <Input type="code" name="code" value={input.code} onChange={handleChange} id='code' className='bg-white text-black' required placeholder="Enter verification code"/>
                 </div>
 
                 {
