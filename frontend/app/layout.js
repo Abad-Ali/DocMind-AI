@@ -2,6 +2,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ReduxProvider } from './provider';  // Client Component
+import LeftSideBar from "@/components/LeftSideBar";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +28,23 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
-          {children}
+          {/* <LeftSideBar/> */}
+          <Navbar />
+          <div className="min-h-screen w-full relative bg-black">
+            {/* Background gradient */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139, 92, 246, 0.25), transparent 70%), #000000",
+              }}
+            />
+          
+            {/* Content */}
+            <div className="relative z-10">
+              {children}
+            </div>
+          </div>
+          <Footer/>
           <Toaster/>
         </ReduxProvider>
       </body>
