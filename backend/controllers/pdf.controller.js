@@ -242,7 +242,7 @@ export const getUploadedPDFs =async(req,res)=>{
             author: pdf.author,
             uploadedBy: pdf.uploadedBy,
             fileUrl: pdf.fileUrl,
-            previewUrl: pdf.fileUrl.replace("/upload/", "/upload/pg_1/") // first page preview
+            previewUrl: pdf.fileUrl.replace("/upload/", "/upload/pg_1/").replace(".pdf", ".png") // first page preview
         }))
 
         return res.status(200).json({
@@ -272,7 +272,7 @@ export const searchPDF = async(req,res)=>{
             author: pdf.author,
             uploadedBy: pdf.uploadedBy,
             fileUrl: pdf.fileUrl,
-            previewUrl: pdf.fileUrl.replace("/upload/", "/upload/pg_1/")
+            previewUrl: pdf.fileUrl.replace("/upload/", "/upload/pg_1/").replace(".pdf", ".png")
         }))
 
         if (pdfsWithPreview.length === 0) {
@@ -284,6 +284,7 @@ export const searchPDF = async(req,res)=>{
         }
 
         return res.status(200).json({
+            message:"Founded some PDFs based on title.",
             success: true,
             pdfs: pdfsWithPreview
         })
