@@ -191,7 +191,8 @@ export const login = async(req,res)=>{
             profilePicture:user.profilePicture,
             name:user.name,
             gender:user.gender,
-            role:user.role
+            role:user.role,
+            createdAt: user.createdAt,
         }
 
         return res.cookie('token', token, {httpOnly:true, secure: true, sameSite:"none", maxAge: 7*24*60*60*1000}).json({
@@ -286,7 +287,7 @@ export const getUserProfile = async(req,res)=>{
         const { userId } = req.params;
 
         // Finding the user by using ID
-        const user = await User.findById(userId).select("username profilePicture role createdAt");
+        const user = await User.findById(userId).select("username name profilePicture role createdAt");
 
         // If user not found
         if(!user){
@@ -297,7 +298,7 @@ export const getUserProfile = async(req,res)=>{
         }
 
         // Finding pdfs which are uploaded by this user
-        const pdfs = await PDF.find({uploadedBy: user._id}).sort({ createdAt: -1 }).populate("uploadedBy", "username profilePicture role");
+        const pdfs = await PDF.find({uploadedBy: user._id}).sort({ createdAt: -1 }).populate("uploadedBy", "name username profilePicture role");
 
         const pdfsWithPreview = pdfs.map(pdf => ({
             id: pdf._id.toString(),
@@ -307,7 +308,7 @@ export const getUserProfile = async(req,res)=>{
             uploadedBy: pdf.uploadedBy,
             fileUrl: pdf.fileUrl,
             previewUrl: pdf.fileUrl
-                ? pdf.fileUrl.replace("/upload/", "/upload/pg_1/")
+                ? pdf.fileUrl.replace("/upload/", "/upload/pg_1/").replace(".pdf", ".png")
                 : null
         }))
 
@@ -343,7 +344,7 @@ export const getProfile = async(req,res)=>{
         }
 
         // Finding pdfs that are in bookmark array
-        const pdfs = await PDF.find({ _id: { $in: user.bookmarks } }).sort({ createdAt: -1 }).populate("uploadedBy", "username profilePicture role");
+        const pdfs = await PDF.find({ _id: { $in: user.bookmarks } }).sort({ createdAt: -1 }).populate("uploadedBy", "name username profilePicture role");
 
         const pdfsWithPreview = pdfs.map(pdf => ({
             id: pdf._id.toString(),
@@ -353,7 +354,7 @@ export const getProfile = async(req,res)=>{
             uploadedBy: pdf.uploadedBy,
             fileUrl: pdf.fileUrl,
             previewUrl: pdf.fileUrl
-                ? pdf.fileUrl.replace("/upload/", "/upload/pg_1/")
+                ? pdf.fileUrl.replace("/upload/", "/upload/pg_1/").replace(".pdf", ".png")
                 : null
         }))
 
