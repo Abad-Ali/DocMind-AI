@@ -12,7 +12,7 @@ router.route('/edit/:pdfId').put(isAuthenticated, isAdmin, editPDF);
 router.route('/delete/:pdfId').post(isAuthenticated, isAdmin, deletePDF);
 router.route('/getlatest').get(isAuthenticated, getLatestPDFs);
 router.route('/getuploaded').get(isAuthenticated, isAdmin, getUploadedPDFs);
-router.route('/search').get(isAuthenticated, searchPDF);
+router.route('/search').post(isAuthenticated, searchPDF);
 router.route('/download/:pdfId').get(isAuthenticated, downloadPDF);
 router.route('/extract/:pdfId').get(isAuthenticated, testPdfExtraction);
 router.route('/getpdf/:pdfId').get(isAuthenticated, getPDF);
