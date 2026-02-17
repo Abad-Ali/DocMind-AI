@@ -193,7 +193,7 @@ export const deletePDF = async(req,res)=>{
 //GET LATEST PDF's
 export const getLatestPDFs = async(req,res)=>{
     try {
-        const pdfs = await PDF.find().populate("uploadedBy", "name email").sort({ createdAt: -1 }).limit(10);
+        const pdfs = await PDF.find().populate("uploadedBy", "username").sort({ createdAt: -1 }).limit(12);
 
         const pdfsWithPreview = pdfs.map(pdf => ({
             id: pdf._id,
@@ -202,7 +202,7 @@ export const getLatestPDFs = async(req,res)=>{
             author: pdf.author,
             uploadedBy: pdf.uploadedBy,
             fileUrl: pdf.fileUrl,
-            previewUrl: pdf.fileUrl.replace("/upload/", "/upload/pg_1/") // first page preview
+            previewUrl: pdf.fileUrl.replace("/upload/", "/upload/pg_1/").replace(".pdf", ".png") // first page preview
         }))
 
         return res.status(200).json({
