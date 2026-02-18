@@ -224,7 +224,7 @@ export const getUploadedPDFs =async(req,res)=>{
         const userId = req.user.id;
 
         // finding the pdfs which have same uploadedby as userId
-        const uploadedPDFs = await PDF.find({ uploadedBy: userId }).sort({ createdAt: -1 }).populate("uploadedBy", "name email").lean();
+        const uploadedPDFs = await PDF.find({ uploadedBy: userId }).sort({ createdAt: -1 }).populate("uploadedBy", "name username profilePicture role").lean();
 
         // If admin didn't upload a single pdf
         if (uploadedPDFs.length === 0) {
@@ -263,7 +263,14 @@ export const searchPDF = async(req,res)=>{
     try {
         const { title } = req.body;
 
-        const searchedPDF = await PDF.find({ title: { $regex: title, $options: "i" } }).sort({ createdAt: -1 }).populate("uploadedBy", "name email").lean();
+        if(!title){
+            return res.status(400).json({
+                message:"Oops something is missing try again!",
+                success:false
+            })
+        }
+
+        const searchedPDF = await PDF.find({ title: { $regex: title, $options: "i" } }).sort({ createdAt: -1 }).populate("uploadedBy", "name username profilePicture role").lean();
 
         const pdfsWithPreview = searchedPDF.map(pdf => ({
             id: pdf._id.toString(),
