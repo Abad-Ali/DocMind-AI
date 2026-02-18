@@ -28,8 +28,8 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
-          {/* <LeftSideBar/> */}
-          <Navbar />
+          <LeftSideBar/>
+          {/* <Navbar /> */}
           <div className="min-h-screen w-full relative bg-black">
             {/* Background gradient */}
             <div
