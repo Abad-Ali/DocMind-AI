@@ -1,21 +1,29 @@
-import { BookMarkedIcon, Home, MoonIcon, SearchIcon } from 'lucide-react'
+'use client'
+import { BookMarkedIcon, Globe, Home, MoonIcon, SearchIcon } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Image from 'next/image'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
+  const router = useRouter();
+
   const NavbarItems = [
-    { icon:<Home/>, text:"Home"},
-    { icon:<SearchIcon/>, text:"Search"},
-    { icon:<BookMarkedIcon/>, text:"Saved PDFs"},
+    { icon:<Home/>, text:"Home", path: '/'},
+    { icon:<Globe/>, text:"Explore", path: '/explore'},
+    { icon:<SearchIcon/>, text:"Search", path: '/search'},
     // { icon:<SettingsIcon/>, text:"Settings"},
     { icon:(
     <Avatar className="w-7.7 h-7.7">
       <AvatarImage src={'https://github.com/Abad-Ali.png'} alt="Profile_pic"/>
       <AvatarFallback>DI</AvatarFallback>
     </Avatar>
-    ), text:" Profile"},
+    ), text:" Profile", path: '/profile'},
   ]
+
+  const navbarHandler = (path) => {
+    router.push(path)
+  }
   return (
     <nav className='flex justify-center'>
         <div className='fixed top-4 w-5xl bg-white/10 px-5 py-4 rounded-4xl z-20 border-2 border-blue-700'>
@@ -32,7 +40,7 @@ const Navbar = () => {
                     {
                         NavbarItems.map((item, index) => {
                             return (
-                                <div key={index} className='flex items-center gap-2 hover:bg-white/5 duration-300 px-3 py-1.5 rounded-xl text-white cursor-pointer'>
+                                <div onClick={() => navbarHandler(item.path)}  key={index} className='flex items-center gap-2 hover:bg-white/5 duration-300 px-3 py-1.5 rounded-xl text-white cursor-pointer'>
                                     <span className='w-7 h-7 cursor-pointer'>{item.icon}</span>
                                     <span className='font-semibold cursor-pointer text-[16px]'>{item.text}</span>
                                 </div>

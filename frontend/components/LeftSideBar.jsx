@@ -1,27 +1,33 @@
 'use client'
-import { BookMarkedIcon, Home, SearchIcon, SettingsIcon, SunIcon } from 'lucide-react'
+import { BookMarkedIcon, Globe, Home, SearchIcon, SettingsIcon, SunIcon } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Image from 'next/image'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
 const LeftSideBar = () => {
+    const router = useRouter();
     const {user} = useSelector(store=>store.auth);
 
     const sidebarItems = [
-      { icon:<Home/>, text:"Home"},
-      { icon:<SearchIcon/>, text:"Search"},
-      { icon:<BookMarkedIcon/>, text:"Saved PDFs"},
-      { icon:<SettingsIcon/>, text:"Settings"},
-      { icon:(
-      <Avatar className="w-7.7 h-7.7">
-        <AvatarImage src={user?.profilePicture || 'https://github.com/Abad-Ali.png'} alt="Profile_pic"/>
-        <AvatarFallback>DI</AvatarFallback>
-      </Avatar>
-      ), text:"Profile" , username: user.username},
-    ]
+      { icon:<Home/>, text:"Home", path: '/'},
+    { icon:<Globe/>, text:"Explore", path: '/explore'},
+    { icon:<SearchIcon/>, text:"Search", path: '/search'},
+    // { icon:<SettingsIcon/>, text:"Settings"},
+    { icon:(
+    <Avatar className="w-7.7 h-7.7">
+      <AvatarImage src={'https://github.com/Abad-Ali.png'} alt="Profile_pic"/>
+      <AvatarFallback>DI</AvatarFallback>
+    </Avatar>
+    ), text:" Profile", path: '/profile'},
+  ]
+
+  const leftSideBarHandler = (path) => {
+    router.push(path)
+  }
   return (
-    <nav className='fixed top-0.5 bottom-0.5 z-20 bg-white/10 backdrop-blur-lg border-r-2 border-slate-500 flex justify-center rounded-r-lg w-xs'>
+    <nav className='fixed top-0.5 bottom-0.5 z-20 bg-black/90 backdrop-blur-lg border-r-2 border-slate-500 flex justify-center rounded-r-lg w-[17rem]'>
         <div>
             <div className='mt-7 text-center'>
                 <div className='flex justify-center items-center'><Image src='/logo2.png' alt='logo' height={100} width={100}/></div>
@@ -34,24 +40,11 @@ const LeftSideBar = () => {
             {
                 sidebarItems.map((item, index) => {
                    return (
-                    <div key={index}>
-                        {
-                            item.text !== 'Profile' ?(
-                                <div className='flex items-center gap-2 hover:bg-white/5 duration-300 px-3 py-1.5 rounded-sm text-white cursor-pointer mx-3 my-1'>
-                                    <span className='w-7 h-7 cursor-pointer'>{item.icon}</span>
-                                    <span className='font-semibold cursor-pointer text-[17px]'>{item.text}</span>
-                                </div>
-                            ):(
-                                <div className='absolute bottom-5 text-center'>
-                                    <span className='text-xl font-bold font-serif text-white'>Your Profile</span>
-                                    <div className='bg-slate-500 h-[2px] w-[17vw] my-2'/>
-                                    <div className='flex items-center gap-3 hover:bg-white/5 duration-300 w-[15vw] px-3 py-2 rounded-sm text-white cursor-pointer mx-3 my-1'>
-                                        <span className='w-7 h-7 cursor-pointer'>{item.icon}</span>
-                                        <span className='font-semibold cursor-pointer text-[17px]'>{item.username}</span>
-                                    </div>
-                                </div>
-                            )
-                        }
+                    <div onClick={()=>leftSideBarHandler(item.path)} key={index}>
+                        <div className='flex items-center gap-2 hover:bg-white/5 duration-300 px-3 py-1.5 rounded-sm text-white cursor-pointer mx-3 my-1'>
+                            <span className='w-7 h-7 cursor-pointer'>{item.icon}</span>
+                            <span className='font-semibold cursor-pointer text-[17px]'>{item.text}</span>
+                        </div>
                     </div>
                 )})  
             }
