@@ -1,5 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from './authSlice.js';
+import recentPDFSlice from './recentPDFSlice.js'
+import pdfSlice from './pdfSlice.js'
+
 import {
   persistStore,
   persistReducer,
@@ -21,6 +24,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth:authSlice,
+    recPDF:recentPDFSlice,
+    pdf:pdfSlice
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
