@@ -1,5 +1,5 @@
 'use client'
-import { Globe, Home, SearchIcon } from 'lucide-react'
+import { Globe, Home, LayoutDashboard, SearchIcon } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Image from 'next/image'
 import React from 'react'
@@ -13,6 +13,7 @@ const LeftSideBar = () => {
     const sidebarItems = [
       { icon:<Home/>, text:"Home", path: '/'},
     { icon:<Globe/>, text:"Explore", path: '/explore'},
+    ...(user.role === 'admin' ? [{ icon: <LayoutDashboard />, text: "Dashboard", path: '/dashboard' }] : []),
     { icon:<SearchIcon/>, text:"Search", path: '/search'},
     { icon:(
     <Avatar className="w-7.7 h-7.7">
