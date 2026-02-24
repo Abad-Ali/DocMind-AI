@@ -324,7 +324,7 @@ export const chatWithAIPDF = async(req,res)=>{
 
         if(question.length> 100) {
           return res.status(400).json({
-            message: "Question is too long",
+            message: "Question must be under 100 characters.",
             success: false
           });
         }
@@ -381,6 +381,21 @@ export const chatWithAIPDF = async(req,res)=>{
         })
     } catch (error) {
         console.error("Error in chat with PDF:", error);
+
+        if (error.response?.status === 429) {
+           return res.status(429).json({
+              success: false,
+              message: "Rate limit exceeded. Please wait and try again."
+           });
+        }
+
+        if (error.response?.status === 403) {
+           return res.status(403).json({
+              success: false,
+              message: "Free API quota exceeded. Try again later."
+           });
+        }
+
         return res.status(500).json({
           message: "Failed to chat with PDF",
           success: false
