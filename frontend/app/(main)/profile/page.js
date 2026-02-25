@@ -134,7 +134,7 @@ const profilePage = () => {
                   console.log(userProfile)
                 }
 
-                <div className='text-2xl text-blue-700 font-bold font-serif mt-1'><span className='text-xl text-slate-400'>Welcome back </span>{userProfile?.name}</div>
+                <div className='text-2xl text-blue-700 font-bold font-serif mt-1'><span className='text-xl text-slate-400'>Welcome back </span>{userProfile?.name || "User"}</div>
             </div>
 
             <div className='flex flex-col justify-center'>

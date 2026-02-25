@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 const LeftSideBar = () => {
     const router = useRouter();
     const {user} = useSelector(store=>store.auth);
+    if (!user) return null
 
     const sidebarItems = [
       { icon:<Home/>, text:"Home", path: '/'},
