@@ -1,4 +1,5 @@
 "use client";
+import { setAuthUser } from '@/app/(main)/redux/authSlice';
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import axios from 'axios';
@@ -9,10 +10,9 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "sonner";
-import { setAuthUser } from '../redux/authSlice';
 
 const LoginPage = () => {
-    const {user} = useSelector((store)=>store.auth);
+    // const {user} = useSelector((store)=>store.autt);
     const dispatch = useDispatch();
 
     const [loading, setloading] = useState(false);
