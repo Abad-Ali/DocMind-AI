@@ -405,6 +405,13 @@ export const changePassword = async(req,res)=>{
             })
         }
 
+        // password should be greater than 7 digits
+        if(newPassword.length<=7){
+            return res.status(400).json({
+              message: "Password must be at least 8 characters long"
+            });
+        }
+
         // If newpassword is not same as confirmpassword
         if(newPassword !== confirmPassword){
             return res.status(400).json({

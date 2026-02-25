@@ -1,5 +1,5 @@
 'use client';
-import { setRecentPDF } from '@/app/redux/recentPDFSlice';
+import { setRecentPDF } from '@/app/(main)/redux/recentPDFSlice';
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'

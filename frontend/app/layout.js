@@ -28,9 +28,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
-          <LeftSideBar/>
-          {/* <Navbar /> */}
-          <div className="min-h-screen w-full relative bg-black">
+          <div className="min-h-screen w-full relative bg-black text-white">
             {/* Background gradient */}
             <div
               className="absolute inset-0"
@@ -44,7 +42,6 @@ export default function RootLayout({ children }) {
               {children}
             </div>
           </div>
-          <Footer/>
           <Toaster/>
         </ReduxProvider>
       </body>

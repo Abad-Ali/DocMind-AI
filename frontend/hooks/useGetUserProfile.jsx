@@ -1,5 +1,5 @@
 'use client';
-import { setBookmarks, setUserProfile } from '@/app/redux/authSlice';
+import { setBookmarks, setUserProfile } from '@/app/(main)/redux/authSlice';
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
