@@ -122,11 +122,11 @@ const profilePage = () => {
   return (
     <div className='pl-64 pt-[10vh] text-white'>
       <div className='flex flex-col items-center'>
-        <div className='grid grid-cols-2 gap-5 mt-7'>
+        <div className='flex gap-5 mt-7'>
             <div className='text-center'>
                 <div className='flex justify-center items-center'>
                     <Avatar className="h-[150px] w-[150px]">
-                      <AvatarImage src={userProfile?.profilePicture || 'logo1.png'} alt="Profile_pic"/>
+                      <AvatarImage src={userProfile?.profilePicture || '/logo1.png'} alt="Profile_pic"/>
                       <AvatarFallback>DI</AvatarFallback>
                     </Avatar>
                 </div>
