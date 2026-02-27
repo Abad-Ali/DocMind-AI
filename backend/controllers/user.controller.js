@@ -248,6 +248,14 @@ export const editProfile = async(req,res)=>{
             });
         }
 
+        //If user doesn't update profile but call api
+        if(username === user.username && name === user.name &&  gender === user.gender && !profilePicture){
+            return res.status(400).json({
+                message:"Please update something...",
+                success:false
+            })
+        }
+
         // Check if username already exists
         if(username){
             const existingUsername = await User.findOne({username, _id:{ $ne: userId}});
