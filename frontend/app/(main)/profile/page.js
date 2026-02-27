@@ -134,12 +134,12 @@ const profilePage = () => {
                   console.log(userProfile)
                 }
 
-                <div className='text-2xl text-blue-700 font-bold font-serif mt-1'><span className='text-xl text-slate-400'>Welcome back </span>{userProfile?.name || "User"}</div>
+                <div className='text-2xl text-blue-700 font-bold font-serif mt-1'><span className='text-xl text-slate-400'>Welcome back</span>&nbsp;{userProfile?.name || "User"}</div>
             </div>
 
             <div className='flex flex-col justify-center'>
                 <div className='text-4xl font-serif font-bold flex items-center gap-2'>
-                    @{user.username}
+                    @{userProfile.username}
 
                     <Badge className='font-bold'>{userProfile.role}</Badge>
                 </div>

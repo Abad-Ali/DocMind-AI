@@ -3,9 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import React, { useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { AtSign, Camera, Save, Sparkle, User } from 'lucide-react';
+import { AtSign, Camera, Loader2, Save, Sparkle, User } from 'lucide-react';
+import { toast } from 'sonner';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { setAuthUser, setUserProfile } from '../../redux/authSlice';
 
 const editProfilepage = () => {
     const {userProfile} = useSelector(store=>store.auth);
@@ -17,6 +21,9 @@ const editProfilepage = () => {
       name: userProfile?.name,
       gender: userProfile?.gender || 'prefer not to say'
     })
+
+    const router = useRouter();
+    const dispatch = useDispatch();
 
     const fileChangeHandler = (e)=>{
       const file = e.target.files?.[0];
@@ -30,9 +37,45 @@ const editProfilepage = () => {
         setInput({...input, [e.target.name]:e.target.value});
     }; 
 
-    const editProfileHandler = (e)=>{
+    const editProfileHandler = async(e)=>{
       e.preventDefault();
       console.log(input);
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append('username',input?.username);
+      formData.append('name',input?.name);
+      formData.append('gender',input?.gender);
+      if(input.profilePicture){
+        formData.append("profilePicture", input?.profilePicture);
+      }
+      try {
+        const res = await axios.put(`http://localhost:8000/api/v1/user/profile/edit`, formData,{
+          // headers:{
+          //   'Content-Type':'multipart/form-data'
+          // },
+          withCredentials:true
+        });
+
+        if(res.data.success){
+          const updatedUserData = {
+            ...userProfile,
+            username:res.data.user?.username,
+            name:res.data.user?.name,
+            profilePicture:res.data.user?.profilePicture,
+            gender:res.data.user?.gender
+          };
+          dispatch(setUserProfile(updatedUserData));
+          dispatch(setAuthUser(updatedUserData));
+          router.replace('/profile');
+          toast.success(res.data.message);
+        }
+      } catch (error) {
+        console.log(error)
+        toast.error(error.response.data.message);
+      }finally{
+        setLoading(false);
+      }
     }
   return (
     <div className='pl-64 h-screen flex justify-center items-center'>
@@ -82,12 +125,18 @@ const editProfilepage = () => {
                           <SelectContent className='bg-gray-950'>
                             <SelectItem value="male" className="hover:bg-gray-950 focus:bg-gray-900 text-white focus:text-white cursor-pointer">Male</SelectItem>
                             <SelectItem value="female" className="hover:bg-gray-950 focus:bg-gray-900 text-white focus:text-white cursor-pointer">Female</SelectItem>
-                            <SelectItem value="prefer not to say" className="hover:bg-gray-950 focus:bg-gray-900 text-white focus:text-white cursor-pointer">Prefer not to say</        SelectItem>
+                            <SelectItem value="prefer not to say" className="hover:bg-gray-950 focus:bg-gray-900 text-white focus:text-white cursor-pointer">Prefer not to say</SelectItem>
                           </SelectContent>
                         </Select>
                     </div>
 
-                    <Button type='submit' className='h-12 mt-2 cursor-pointer'><Save strokeWidth={3} size={18}/>Save Changes</Button>
+                    {
+                      loading ? (
+                        <Button disabled={loading} className='h-12 mt-2 cursor-pointer'><Loader2 strokeWidth={3} className='animate-spin'/>Please wait...</Button>
+                      ):(
+                        <Button type='submit' className='h-12 mt-2 cursor-pointer'><Save strokeWidth={3} size={18}/>Save Changes</Button>
+                      )
+                    }
                 </form>
               </div>
             </div>
