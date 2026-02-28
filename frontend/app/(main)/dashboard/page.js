@@ -5,12 +5,25 @@ import { Edit3Icon, FileEdit, InfoIcon, UploadCloud, UploadCloudIcon } from 'luc
 import Image from 'next/image'
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 
 const Dashboardpage = () => {
     const [activeButton, setActiveButton] = useState("upload");
+    const [selectedPdf, setSelectedPdf] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [pdfAction, setPdfAction] = useState("");
+
     const pdfRef = useRef();
+
     useGetUploadedPdfs();
     const { uploadedPDFS }= useSelector(store=>store.pdf);
+
+    const selectpdfHandler = (pdf)=>{
+        setOpen(true);
+        setSelectedPdf(pdf)
+        console.log(pdf);
+    }
   return (
     <div className='pl-64 pt-[10vh] text-white'>
         <div className='flex flex-col items-center h-screen'>
@@ -49,7 +62,7 @@ const Dashboardpage = () => {
                                 <div className='flex justify-center items-center gap-0 flex-wrap'>
                                     {
                                       uploadedPDFS.map(pdf => (
-                                            <div key={pdf.id}>
+                                            <div onClick={()=>selectpdfHandler(pdf)} key={pdf.id}>
                                                 <div className="relative w-[250] h-[300] rounded-2xl overflow-hidden scale-95 hover:scale-100 duration-300 border-2 hover:border-blue-700">
                                                     <img
                                                       src={pdf.previewUrl}
@@ -87,6 +100,48 @@ const Dashboardpage = () => {
                         </div>
                     )
                 }
+
+                <Dialog open={open} onOpenChange={setOpen}>
+                  <DialogContent className="sm:max-w-sm max-h-[70vh] overflow-y-auto bg-black/20 backdrop-blur-xs">
+                    <DialogHeader>
+                      <DialogTitle className="text-lg font-bold text-white">Choose an action</DialogTitle>
+                    </DialogHeader>
+                    <div className='flex flex-col gap-5'>
+                        <div>
+                            <p className='text-slate-200'>Select an action for this item.</p>
+                            <p className='text-sm text-slate-300'>Editing will update it, while deleting will remove it permanently.</p>
+                        </div>
+
+                        <div className='flex gap-3'>
+                            <Button onClick={()=>setPdfAction("editPdf")} className='cursor-pointer'>Edit PDF</Button>
+                            <Button onClick={()=>setPdfAction("deletePdf")} className='cursor-pointer'>Delete PDF</Button>
+                        </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <AlertDialog open={pdfAction === "deletePdf"} 
+                    onOpenChange={(open) => {
+                      if (!open) setPdfAction("")
+                    }}
+                >
+                    <AlertDialogContent className='!max-w-[27vw] bg-black'>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className='text-white'>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription className='text-slate-200'>
+                          <div>
+                            <span>This action cannot be undone. This will permanently delete your
+                          PDF from our servers.</span>
+                          <hr className='mt-5'/>
+                          </div>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className='cursor-pointer'>Cancel</AlertDialogCancel>
+                        <AlertDialogAction className='cursor-pointer'>Delete PDF</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
         </div>
     </div>
