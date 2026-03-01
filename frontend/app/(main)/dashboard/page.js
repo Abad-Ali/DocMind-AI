@@ -10,6 +10,9 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import axios from 'axios'
 import { toast } from 'sonner'
 import { removePdf } from '../redux/pdfSlice'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 const Dashboardpage = () => {
     const [activeButton, setActiveButton] = useState("upload");
@@ -141,23 +144,61 @@ const Dashboardpage = () => {
                       if (!open) setPdfAction("")
                     }}
                 >
-                    <AlertDialogContent className='!max-w-[27vw] bg-black'>
+                    <AlertDialogContent className='!max-w-[27vw] bg-black/95'>
                       <AlertDialogHeader>
                         <AlertDialogTitle className='text-white'>Are you absolutely sure?</AlertDialogTitle>
                         <AlertDialogDescription className='text-slate-200'>
                           <div>
                             <span>This action cannot be undone. This will permanently delete your
                           PDF from our servers.</span>
-                          <hr className='mt-5'/>
                           </div>
                         </AlertDialogDescription>
                       </AlertDialogHeader>
+                      <hr className='my-0.5'/>
                       <AlertDialogFooter>
                         <AlertDialogCancel className='cursor-pointer'>Cancel</AlertDialogCancel>
                         <AlertDialogAction onClick={deletePdfHandler} className='cursor-pointer'>Delete PDF</AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
+
+
+                <Dialog open={pdfAction === "editPdf"} 
+                     onOpenChange={(open) => {
+                      if (!open) setPdfAction("")
+                    }}
+                >
+                  <DialogContent className="sm:max-w-lg max-h-[70vh] overflow-hidden bg-black/95 backdrop-blur-xs">
+                    <DialogHeader>
+                      <DialogTitle>
+                        <div className='my-2 flex flex-col items-center'>
+                            <span className="text-lg font-bold text-white flex items-center gap-1"><Edit3Icon strokeWidth={3} size={17}/>Edit PDF</span>
+                            <span className='text-sm font-semibold text-slate-400'>Update and modify your uploaded PDFs with ease</span>
+                        </div>
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className='text-white overflow-hidden'>
+                        <form className='flex flex-col gap-3 overflow-hidden'>
+                            <div className='flex flex-col gap-2'>
+                                <Label htmlFor="title" className='font-serif'>Title : </Label> 
+                                <Input type="title" name="title" id='title' className='bg-white text-black' required placeholder="Enter the title for PDF"/>
+                            </div>
+
+                            <div className='flex flex-col gap-2'>
+                                <Label htmlFor="description" className='font-serif'>Description :</Label> 
+                                <Textarea type="description" name="description" id='description' className='bg-white text-black max-h-16' required placeholder="Enter the description for PDF"/>
+                            </div>
+
+                            <div className='flex flex-col gap-2'>
+                                <Label htmlFor="author" className='font-serif'>Author :</Label> 
+                                <Input type="author" name="author" id='author' className='bg-white text-black' required placeholder="Enter the author of the PDF"/>
+                            </div>
+
+                            <Button className='mt-1 cursor-pointer'>Update Details</Button>
+                        </form>
+                    </div>
+                  </DialogContent>
+                </Dialog>
             </div>
         </div>
     </div>
