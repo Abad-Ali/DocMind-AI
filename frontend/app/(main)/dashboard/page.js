@@ -4,9 +4,12 @@ import useGetUploadedPdfs from '@/hooks/useGetUploadedPdfs'
 import { Edit3Icon, FileEdit, InfoIcon, UploadCloud, UploadCloudIcon } from 'lucide-react'
 import Image from 'next/image'
 import React, { useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
+import axios from 'axios'
+import { toast } from 'sonner'
+import { removePdf } from '../redux/pdfSlice'
 
 const Dashboardpage = () => {
     const [activeButton, setActiveButton] = useState("upload");
@@ -18,11 +21,24 @@ const Dashboardpage = () => {
 
     useGetUploadedPdfs();
     const { uploadedPDFS }= useSelector(store=>store.pdf);
+    const dispatch = useDispatch();
 
     const selectpdfHandler = (pdf)=>{
         setOpen(true);
         setSelectedPdf(pdf)
-        console.log(pdf);
+        // console.log(pdf);
+    }
+
+    const deletePdfHandler = async()=>{
+        try {
+            const res = await axios.post(`http://localhost:8000/api/v1/pdf/delete/${selectedPdf.id}`, {}, {withCredentials:true});
+            if(res.data.success){
+                dispatch(removePdf(selectedPdf.id));
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
     }
   return (
     <div className='pl-64 pt-[10vh] text-white'>
@@ -138,7 +154,7 @@ const Dashboardpage = () => {
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel className='cursor-pointer'>Cancel</AlertDialogCancel>
-                        <AlertDialogAction className='cursor-pointer'>Delete PDF</AlertDialogAction>
+                        <AlertDialogAction onClick={deletePdfHandler} className='cursor-pointer'>Delete PDF</AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
