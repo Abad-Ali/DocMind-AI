@@ -13,8 +13,13 @@ const pdfSlice = createSlice({
         setUploadedPDF:(state,action)=>{
             state.uploadedPDFS = action.payload;
         },
+        removePdf: (state, action) => {
+          state.uploadedPDFS = state.uploadedPDFS.filter(
+            (pdf) => pdf.id !== action.payload
+          );
+        },
     }
 });
 
-export const { setPDF, setUploadedPDF } = pdfSlice.actions;
+export const { setPDF, setUploadedPDF, removePdf } = pdfSlice.actions;
 export default pdfSlice.reducer;
