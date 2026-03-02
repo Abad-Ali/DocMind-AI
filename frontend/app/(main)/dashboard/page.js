@@ -13,6 +13,7 @@ import { removePdf } from '../redux/pdfSlice'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import AIOrb from '@/components/AiAnimatedLogo'
 
 const Dashboardpage = () => {
     const [activeButton, setActiveButton] = useState("upload");
@@ -180,18 +181,24 @@ const Dashboardpage = () => {
                     <div className='text-white overflow-hidden'>
                         <form className='flex flex-col gap-3 overflow-hidden'>
                             <div className='flex flex-col gap-2'>
-                                <Label htmlFor="title" className='font-serif'>Title : </Label> 
-                                <Input type="title" name="title" id='title' className='bg-white text-black' required placeholder="Enter the title for PDF"/>
+                                <Label htmlFor="title" className='font-serif ml-1'>Title : </Label> 
+                                <div className='flex items-center'>
+                                    <Input type="title" name="title" id='title' className='bg-white text-black h-10 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the title for PDF"/>
+                                    <div className='bg-slate-50 h-10 flex justify-center items-center rounded-r-lg cursor-pointer'><AIOrb size={50}/></div>
+                                </div>
                             </div>
 
                             <div className='flex flex-col gap-2'>
-                                <Label htmlFor="description" className='font-serif'>Description :</Label> 
-                                <Textarea type="description" name="description" id='description' className='bg-white text-black max-h-16' required placeholder="Enter the description for PDF"/>
+                                <Label htmlFor="author" className='font-serif ml-1'>Author :</Label> 
+                                <Input type="author" name="author" id='author' className='bg-white text-black h-10 focus-visible:ring-transparent' required placeholder="Enter the author of the PDF"/>
                             </div>
 
                             <div className='flex flex-col gap-2'>
-                                <Label htmlFor="author" className='font-serif'>Author :</Label> 
-                                <Input type="author" name="author" id='author' className='bg-white text-black' required placeholder="Enter the author of the PDF"/>
+                                <Label htmlFor="description" className='font-serif ml-1'>Description :</Label> 
+                                <div className='flex items-center'>
+                                    <Textarea type="description" name="description" id='description' className='bg-white text-black max-h-16 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the description for PDF"/>
+                                    <div className='bg-slate-50 h-16 flex justify-center items-center rounded-r-lg cursor-pointer'><AIOrb size={50}/></div>
+                                </div>
                             </div>
 
                             <Button className='mt-1 cursor-pointer'>Update Details</Button>
