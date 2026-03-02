@@ -149,10 +149,8 @@ const Dashboardpage = () => {
                       <AlertDialogHeader>
                         <AlertDialogTitle className='text-white'>Are you absolutely sure?</AlertDialogTitle>
                         <AlertDialogDescription className='text-slate-200'>
-                          <div>
-                            <span>This action cannot be undone. This will permanently delete your
-                          PDF from our servers.</span>
-                          </div>
+                          This action cannot be undone. This will permanently delete your
+                          PDF from our servers.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <hr className='my-0.5'/>
