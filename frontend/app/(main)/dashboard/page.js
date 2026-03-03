@@ -3,13 +3,13 @@ import { Button } from '@/components/ui/button'
 import useGetUploadedPdfs from '@/hooks/useGetUploadedPdfs'
 import { Edit3Icon, FileEdit, InfoIcon, UploadCloud, UploadCloudIcon } from 'lucide-react'
 import Image from 'next/image'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import axios from 'axios'
 import { toast } from 'sonner'
-import { removePdf } from '../redux/pdfSlice'
+import { removePdf, updatePdf } from '../redux/pdfSlice'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -20,6 +20,12 @@ const Dashboardpage = () => {
     const [selectedPdf, setSelectedPdf] = useState(null);
     const [open, setOpen] = useState(false);
     const [pdfAction, setPdfAction] = useState("");
+    const [loading, setloading] = useState(false);
+    const [input, setInput] = useState({
+        title:"",
+        description:"",
+        author:""
+    });
 
     const pdfRef = useRef();
 
@@ -33,12 +39,55 @@ const Dashboardpage = () => {
         // console.log(pdf);
     }
 
+    const handleChange = (e)=>{
+        setInput({...input, [e.target.name]:e.target.value});
+    };
+
+    useEffect(() => {
+        if (selectedPdf) {
+            setInput({
+                title: selectedPdf.title || "",
+                description: selectedPdf.description || "",
+                author: selectedPdf.author || ""
+            });
+        }
+    }, [selectedPdf]);
+
+    const editPdfHandler = async(e)=>{
+        e.preventDefault();
+        console.log(input);
+        setloading(true);
+        try {
+            const res = await axios.put(`http://localhost:8000/api/v1/pdf/edit/${selectedPdf.id}`, input, {withCredentials:true});
+
+            if(res.data.success){
+                const updatedPdf = res.data.pdf;
+                dispatch(updatePdf({
+                  id: updatedPdf._id,
+                  title: updatedPdf.title,
+                  description: updatedPdf.description,
+                  author: updatedPdf.author,
+                  fileUrl: updatedPdf.fileUrl,
+                  uploadedBy: updatedPdf.uploadedBy,
+                  uploadedAt: updatedPdf.uploadedAt
+                }));
+
+                toast.success(res.data.message);
+                setOpen(false);
+                setPdfAction("");
+            }
+        } catch (error) {
+           toast.error(error.response.data.message); 
+        }
+    }
+
     const deletePdfHandler = async()=>{
         try {
             const res = await axios.post(`http://localhost:8000/api/v1/pdf/delete/${selectedPdf.id}`, {}, {withCredentials:true});
             if(res.data.success){
                 dispatch(removePdf(selectedPdf.id));
                 toast.success(res.data.message);
+                setOpen(false);
             }
         } catch (error) {
             toast.error(error.response.data.message);
@@ -149,8 +198,7 @@ const Dashboardpage = () => {
                       <AlertDialogHeader>
                         <AlertDialogTitle className='text-white'>Are you absolutely sure?</AlertDialogTitle>
                         <AlertDialogDescription className='text-slate-200'>
-                          This action cannot be undone. This will permanently delete your
-                          PDF from our servers.
+                          This action cannot be undone. This will permanently delete your PDF from our servers.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <hr className='my-0.5'/>
@@ -177,29 +225,29 @@ const Dashboardpage = () => {
                       </DialogTitle>
                     </DialogHeader>
                     <div className='text-white overflow-hidden'>
-                        <form className='flex flex-col gap-3 overflow-hidden'>
+                        <form onSubmit={editPdfHandler} className='flex flex-col gap-3 overflow-hidden'>
                             <div className='flex flex-col gap-2'>
                                 <Label htmlFor="title" className='font-serif ml-1'>Title : </Label> 
                                 <div className='flex items-center'>
-                                    <Input type="title" name="title" id='title' className='bg-white text-black h-10 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the title for PDF"/>
+                                    <Input type="title" name="title" value={input.title} onChange={handleChange} id='title' className='bg-white text-black h-10 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the title for PDF"/>
                                     <div className='bg-slate-50 h-10 flex justify-center items-center rounded-r-lg cursor-pointer'><AIOrb size={50}/></div>
                                 </div>
                             </div>
 
                             <div className='flex flex-col gap-2'>
                                 <Label htmlFor="author" className='font-serif ml-1'>Author :</Label> 
-                                <Input type="author" name="author" id='author' className='bg-white text-black h-10 focus-visible:ring-transparent' required placeholder="Enter the author of the PDF"/>
+                                <Input type="author" name="author" value={input.author} onChange={handleChange} id='author' className='bg-white text-black h-10 focus-visible:ring-transparent' required placeholder="Enter the author of the PDF"/>
                             </div>
 
                             <div className='flex flex-col gap-2'>
                                 <Label htmlFor="description" className='font-serif ml-1'>Description :</Label> 
                                 <div className='flex items-center'>
-                                    <Textarea type="description" name="description" id='description' className='bg-white text-black max-h-16 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the description for PDF"/>
+                                    <Textarea type="description" name="description" value={input.description} onChange={handleChange} id='description' className='bg-white text-black max-h-16 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the description for PDF"/>
                                     <div className='bg-slate-50 h-16 flex justify-center items-center rounded-r-lg cursor-pointer'><AIOrb size={50}/></div>
                                 </div>
                             </div>
 
-                            <Button className='mt-1 cursor-pointer'>Update Details</Button>
+                            <Button type='submit' className='mt-1 cursor-pointer'>Update Details</Button>
                         </form>
                     </div>
                   </DialogContent>
