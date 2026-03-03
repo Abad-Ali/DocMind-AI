@@ -68,7 +68,7 @@ const Dashboardpage = () => {
                   description: updatedPdf.description,
                   author: updatedPdf.author,
                   fileUrl: updatedPdf.fileUrl,
-                  uploadedBy: updatedPdf.uploadedBy,
+                //   uploadedBy: updatedPdf.uploadedBy,
                   uploadedAt: updatedPdf.uploadedAt
                 }));
 
