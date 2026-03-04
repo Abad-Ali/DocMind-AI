@@ -100,6 +100,23 @@ const Dashboardpage = () => {
         }
     }
 
+    const enhanceDescriptionHandler = async()=>{
+        setloading(true)
+        setInput(prev => ({ ...prev, description: "AI is thinking..."}));
+        try {
+            const res = await axios.post(`http://localhost:8000/api/v1/pdf/enhance-description`, {description : input.description}, {withCredentials:true});
+            if(res.data.success){
+                const aiDescription = res.data.aiEnhanceDescription;
+                setInput(prev => ({ ...prev, description: aiDescription}));
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }finally{
+            setloading(false);
+        }
+    }
+
     const deletePdfHandler = async()=>{
         try {
             const res = await axios.post(`http://localhost:8000/api/v1/pdf/delete/${selectedPdf.id}`, {}, {withCredentials:true});
@@ -163,7 +180,7 @@ const Dashboardpage = () => {
                                                                 <span className="text-[17px] font-sans font-semibold">{pdf.title}</span>
                                                             </div>
     
-                                                            <div>
+                                                            <div className='overflow-y-auto max-h-[75] scroll-hide scrollable'>
                                                                 <span className="text-[17px] font-serif font-semibold">Description: </span>
                                                                 <span className="text-[17px] font-sans font-semibold">{pdf.description}</span>
                                                             </div>
@@ -262,7 +279,7 @@ const Dashboardpage = () => {
                                 <Label htmlFor="description" className='font-serif ml-1'>Description :</Label> 
                                 <div className='flex items-center'>
                                     <Textarea type="description" name="description" value={input.description} onChange={handleChange} id='description' className='bg-white text-black max-h-16 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the description for PDF"/>
-                                    <div className='bg-slate-50 h-16 flex justify-center items-center rounded-r-lg cursor-pointer'><AIOrb size={50}/></div>
+                                    <button disabled={loading} onClick={enhanceDescriptionHandler} className={`bg-slate-50 h-16 flex justify-center items-center rounded-r-lg ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}><AIOrb size={50}/></button>
                                 </div>
                             </div>
 
