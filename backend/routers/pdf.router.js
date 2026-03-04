@@ -22,7 +22,7 @@ router.route('/:pdfId/bookmark').get(isAuthenticated, bookmarkPDF);
 router.route('/:pdfId/summary').post(isAuthenticated, generateSummary);
 router.route('/:pdfId/questions').post(isAuthenticated, generateQuestions);
 router.route('/enhance-title').post(isAuthenticated, isAdmin, enhanceTitle);
-router.route('/enhance-title').post(isAuthenticated, isAdmin, enhanceTitle);
+router.route('/enhance-description').post(isAuthenticated, isAdmin, enhanceDescription);
 router.route('/:pdfId/chat').post(isAuthenticated, chatWithAIPDF);
 
 export default router
