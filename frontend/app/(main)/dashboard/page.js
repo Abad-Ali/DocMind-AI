@@ -69,7 +69,7 @@ const Dashboardpage = () => {
                   author: updatedPdf.author,
                   fileUrl: updatedPdf.fileUrl,
                 //   uploadedBy: updatedPdf.uploadedBy,
-                  uploadedAt: updatedPdf.uploadedAt
+                //   uploadedAt: updatedPdf.uploadedAt
                 }));
 
                 toast.success(res.data.message);
@@ -78,6 +78,25 @@ const Dashboardpage = () => {
             }
         } catch (error) {
            toast.error(error.response.data.message); 
+        }finally{
+            setloading(false);
+        }
+    }
+
+    const enhanceTitleHandler = async()=>{
+        setloading(true)
+        setInput(prev => ({ ...prev, title: "AI is thinking..."}));
+        try {
+            const res = await axios.post(`http://localhost:8000/api/v1/pdf/enhance-title`, {title : input.title}, {withCredentials:true});
+            if(res.data.success){
+                const aiTitle = res.data.aiEnhanceTitle;
+                setInput(prev => ({ ...prev, title: aiTitle}));
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }finally{
+            setloading(false);
         }
     }
 
@@ -230,7 +249,7 @@ const Dashboardpage = () => {
                                 <Label htmlFor="title" className='font-serif ml-1'>Title : </Label> 
                                 <div className='flex items-center'>
                                     <Input type="title" name="title" value={input.title} onChange={handleChange} id='title' className='bg-white text-black h-10 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the title for PDF"/>
-                                    <div className='bg-slate-50 h-10 flex justify-center items-center rounded-r-lg cursor-pointer'><AIOrb size={50}/></div>
+                                    <button disabled={loading} onClick={enhanceTitleHandler} className={`bg-slate-50 h-10 flex justify-center items-center rounded-r-lg ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}><AIOrb size={50}/></button>
                                 </div>
                             </div>
 
