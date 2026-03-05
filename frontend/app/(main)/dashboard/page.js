@@ -26,6 +26,7 @@ const Dashboardpage = () => {
         description:"",
         author:""
     });
+    const [uploadForm,setUploadForm] = useState(false);
 
     const pdfRef = useRef();
 
@@ -129,6 +130,25 @@ const Dashboardpage = () => {
             toast.error(error.response.data.message);
         }
     }
+
+    const handleFileChange = (e) => {
+      const file = e.target.files[0];
+    
+      if (!file) return;
+    
+      if (file.type !== "application/pdf") {
+        toast.error("Only PDF files are allowed");
+        return;
+      }
+    
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error("File size must be under 10MB");
+        return;
+      }
+    
+      setSelectedPdf(file);
+      setUploadForm(true);
+    };
   return (
     <div className='pl-64 pt-[10vh] text-white'>
         <div className='flex flex-col items-center h-screen'>
@@ -147,16 +167,59 @@ const Dashboardpage = () => {
                 
                 {
                     activeButton === "upload" && (
-                        <div onClick={()=> pdfRef.current.click()} className='min-w-[60vw] min-h-[45vh] border-2 border-slate-500 border-y-slate-400 rounded-xl bg-black/10 backdrop-blur-lg flex flex-col items-center gap-1 justify-center cursor-pointer'>
+                        <div className='min-w-[60vw] min-h-[45vh] border-2 border-slate-500 border-y-slate-400 rounded-xl bg-black/10 backdrop-blur-lg flex flex-col items-center gap-1 justify-center cursor-pointer'>
                             <Image className='mb-5' src='/PDF.png' alt='PDFpng' width={50} height={50} />
-                            <span className='text-sm font-semibold text-slate-500'>Upload or drag a file here</span>
+                            <span className='text-sm font-semibold text-slate-500'>Upload a PDF file here</span>
                             <span className='text-sm text-slate-500 flex items-center gap-1'>Supported file format is only PDF, size : 10MB <InfoIcon size={15} className='mt-0.5'/></span>
         
-                            <input ref={pdfRef} type='file' className='hidden'/>
+                            <input accept="application/pdf" onChange={handleFileChange} ref={pdfRef} type='file' className='hidden'/>
                             <button onClick={()=> pdfRef.current.click()} className='mt-5 px-4 py-2 border-2 border-slate-500 rounded-lg cursor-pointer flex justify-center items-center gap-2 font-bold bg-[#0f172b] hover:bg-blue-700 group duration-300'><UploadCloudIcon className='text-blue-700 group-hover:text-white duration-300' strokeWidth={3}/> Upload a File</button>
                         </div>
                     )
                 }
+
+                
+                <Dialog open={uploadForm} onOpenChange={setUploadForm}>
+                  <DialogContent className="sm:max-w-[450] max-h-[70vh] overflow-hidden bg-black">
+                    <DialogHeader>
+                      <DialogTitle className="text-lg font-bold text-white text-center">
+                        <div className='my-2 flex flex-col items-center'>
+                            <h3>Enter PDF Details</h3>
+                            <span className='text-sm font-semibold text-slate-400'>Upload your PDF file and fill in the details.</span>
+                        </div>
+                        </DialogTitle>
+                    </DialogHeader>
+                    <div className='overflow-hidden'>
+                       <div className='text-white overflow-hidden'>
+                            <form className='flex flex-col gap-3 overflow-hidden'>
+                                <div className='flex flex-col gap-2'>
+                                    <Label htmlFor="title" className='font-serif ml-1'>Title : </Label> 
+                                    <div className='flex items-center'>
+                                        <Input type="title" name="title" value={input.title} onChange={handleChange} id='title' className='bg-white text-black h-10 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the title for PDF"/>
+                                        <button disabled={loading} onClick={enhanceTitleHandler} className={`bg-slate-50 h-10 flex justify-center items-center rounded-r-lg ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}><AIOrb size={50}/></button>
+                                    </div>
+                                </div>
+    
+                                <div className='flex flex-col gap-2'>
+                                    <Label htmlFor="author" className='font-serif ml-1'>Author :</Label> 
+                                    <Input type="author" name="author" value={input.author} onChange={handleChange} id='author' className='bg-white text-black h-10 focus-visible:ring-transparent' required placeholder="Enter the author of the PDF"/>
+                                </div>
+    
+                                <div className='flex flex-col gap-2'>
+                                    <Label htmlFor="description" className='font-serif ml-1'>Description :</Label> 
+                                    <div className='flex items-center'>
+                                        <Textarea type="description" name="description" value={input.description} onChange={handleChange} id='description' className='bg-white text-black max-h-16 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the description for PDF"/>
+                                        <button disabled={loading} onClick={enhanceDescriptionHandler} className={`bg-slate-50 h-16 flex justify-center items-center rounded-r-lg ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}><AIOrb size={50}/></button>
+                                    </div>
+                                </div>
+    
+                                <Button type='submit' className='mt-1 cursor-pointer'>Upload PDF</Button>
+                            </form>
+                        </div> 
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
 
                 {
                     activeButton === "edit" && (
