@@ -26,9 +26,12 @@ const pdfSlice = createSlice({
               ...action.payload
             };
           }
+        },
+        addPdf: (state, action) => {
+          state.uploadedPDFS.push(action.payload);
         }
     }
 });
 
-export const { setPDF, setUploadedPDF, removePdf, updatePdf } = pdfSlice.actions;
+export const { setPDF, setUploadedPDF, removePdf, updatePdf, addPdf } = pdfSlice.actions;
 export default pdfSlice.reducer;
