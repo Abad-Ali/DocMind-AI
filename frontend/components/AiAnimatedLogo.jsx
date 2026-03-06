@@ -55,7 +55,7 @@ export default function AIOrb({ size = 80 }) {
         animate={{ scale: [0.6, 0.66, 0.6] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         className="relative rounded-full 
-        bg-black border-2 border-slate-500 
+        bg-black border-[3px] border-slate-500 
         flex items-center justify-center shadow-lg"
         style={{
           width: size,
