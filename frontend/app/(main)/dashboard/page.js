@@ -9,7 +9,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, Dialog
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import axios from 'axios'
 import { toast } from 'sonner'
-import { removePdf, updatePdf } from '../redux/pdfSlice'
+import { addPdf, removePdf, updatePdf } from '../redux/pdfSlice'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -131,6 +131,7 @@ const Dashboardpage = () => {
         }
     }
 
+
     const handleFileChange = (e) => {
       const file = e.target.files[0];
     
@@ -149,6 +150,34 @@ const Dashboardpage = () => {
       setSelectedPdf(file);
       setUploadForm(true);
     };
+
+    const uploadPDFHandler = async()=>{
+        setloading(true);
+        console.log(input);
+        try {
+            const formData = new FormData();
+            formData.append("title", input.title);
+            formData.append("description", input.description);
+            formData.append("author", input.author);
+            formData.append("pdfFile", selectedPdf);
+
+            const res = await axios.post(`http://localhost:8000/api/v1/pdf/upload`, formData, {withCredentials:true});
+
+            if(res.data.success){
+                dispatch(addPdf(res.data.pdf))
+                toast.success(res.data.message);
+                setInput({
+                    title:"",
+                    description:"",
+                    author:""
+                })
+                setUploadForm(false);
+            }
+
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    }
   return (
     <div className='pl-64 pt-[10vh] text-white'>
         <div className='flex flex-col items-center h-screen'>
@@ -177,7 +206,6 @@ const Dashboardpage = () => {
                         </div>
                     )
                 }
-
                 
                 <Dialog open={uploadForm} onOpenChange={setUploadForm}>
                   <DialogContent className="sm:max-w-[450] max-h-[70vh] overflow-hidden bg-black">
@@ -213,7 +241,7 @@ const Dashboardpage = () => {
                                     </div>
                                 </div>
     
-                                <Button type='submit' className='mt-1 cursor-pointer'>Upload PDF</Button>
+                                <Button onClick={uploadPDFHandler} type='button' className='mt-1 cursor-pointer'>Upload PDF</Button>
                             </form>
                         </div> 
                     </div>
