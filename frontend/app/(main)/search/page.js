@@ -51,7 +51,7 @@ const searchPage = () => {
     return
   }
   return (
-    <div className='pt-[10vh] pl-64 flex flex-col items-center text-white'>
+    <div className='pt-[10vh] pl-64 flex flex-col items-center text-white min-h-screen'>
         <div className="px-10 pb-10">
 
           <div className="text-center mt-10">

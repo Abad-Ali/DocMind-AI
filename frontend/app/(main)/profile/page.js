@@ -120,7 +120,7 @@ const profilePage = () => {
     return <div className="pl-64 pt-[10vh] text-white">Loading profile...</div>;
   }
   return (
-    <div className='pl-64 pt-[10vh] text-white'>
+    <div className='pl-64 pt-[10vh] text-white min-h-screen'>
       <div className='flex flex-col items-center'>
         <div className='flex gap-5 mt-7'>
             <div className='text-center'>
@@ -286,7 +286,7 @@ const profilePage = () => {
             </div>
             <hr className='border-t-2 border-slate-500'/>
             {
-              bookmarks ? (
+              bookmarks.length > 0 ? (
                 <div className='my-7 flex justify-center items-center'>
                     <div className="grid grid-cols-3 gap-5">
                       {bookmarks.map(pdf => (
@@ -303,7 +303,7 @@ const profilePage = () => {
                                               <span className="font-sans font-semibold">{pdf.title}</span>
                                           </div>
               
-                                          <div className='text-start'>
+                                          <div className='text-start overflow-y-auto max-h-[75] scroll-hide scrollable'>
                                               <span className="font-serif font-semibold">Description: </span>
                                               <span className="font-sans font-semibold">{pdf.description}</span>
                                           </div>

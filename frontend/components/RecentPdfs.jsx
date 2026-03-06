@@ -28,7 +28,7 @@ const RecentPdfs = () => {
                                     <span className="text-[17px] font-sans font-semibold">{pdf.title}</span>
                                 </div>
     
-                                <div>
+                                <div className='overflow-y-auto max-h-[75] scroll-hide scrollable'>
                                     <span className="text-[17px] font-serif font-semibold">Description: </span>
                                     <span className="text-[17px] font-sans font-semibold">{pdf.description}</span>
                                 </div>

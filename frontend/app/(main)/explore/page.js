@@ -7,7 +7,7 @@ import React from 'react'
 
 const explorePage = () => {
   return (
-    <div className='pt-[10vh] text-white pl-64'>
+    <div className='pt-[10vh] text-white pl-64 min-h-screen'>
         <div className='flex flex-col items-center'>
             <div className="text-center mt-10">
               <h1 className="text-4xl font-bold">Explore PDFs</h1>
