@@ -13,17 +13,15 @@ const RecentPdfs = () => {
         </div>
 
         <div className="flex justify-center items-center mt-4 mb-7">
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid grid-cols-4 gap-3">
             {recentPDF.map(pdf => (
                 <div key={pdf.id} onClick={()=>router.push(`pdf/${pdf.id}`)}>
-                    <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                    <div className="relative w-[245] h-[300] rounded-2xl overflow-hidden">
                         <img
                           src={pdf.previewUrl}
-                          width="250px"
-                          height="150px"
-                          className="rounded-2xl"
+                          className="rounded-2xl w-full h-full"
                         />
-                        <div className="absolute bottom-0 bg-black/20 backdrop-blur-lg min-w-full min-h-[30vh] rounded-2xl text-black">
+                        <div className="absolute bottom-0 bg-black/20 backdrop-blur-lg min-w-full min-h-[200] rounded-2xl text-black">
                             <div className="m-3 mt-5">
                                 <div>
                                     <span className="text-[17px] font-serif font-semibold">Title: </span>

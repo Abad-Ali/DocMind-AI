@@ -291,14 +291,12 @@ const profilePage = () => {
                     <div className="grid grid-cols-3 gap-5">
                       {bookmarks.map(pdf => (
                           <div key={pdf.id}>
-                              <Link href={`/pdf/${pdf.id}`}><div className="relative w-full h-full rounded-2xl overflow-hidden">
+                              <Link href={`/pdf/${pdf.id}`}><div className="relative w-[225] h-[300] rounded-2xl overflow-hidden">
                                   <img
                                     src={pdf.previewUrl}
-                                    width="250px"
-                                    height="150px"
-                                    className="rounded-2xl"
+                                    className="rounded-2xl w-full h-full"
                                   />
-                                  <div className="absolute bottom-0 bg-black/20 backdrop-blur-lg min-w-full min-h-[30vh] rounded-2xl text-black">
+                                  <div className="absolute bottom-0 bg-black/20 backdrop-blur-lg min-w-full min-h-[200] rounded-2xl text-black">
                                       <div className="m-3 mt-5">
                                           <div className='text-start'>
                                               <span className="font-serif font-semibold">Title: </span>
