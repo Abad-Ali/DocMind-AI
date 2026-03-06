@@ -51,20 +51,22 @@ export const uploadPDF = async(req,res)=>{
             chunks: pdfChunks(extractedText),
             uploadedBy: req.user.id
         });
+
+        await pdf.populate('uploadedBy', 'username');
+        const pdfsWithPreview = {
+            id: pdf._id.toString(),
+            title: pdf.title,
+            description: pdf.description,
+            author: pdf.author,
+            uploadedBy: pdf.uploadedBy,
+            fileUrl: pdf.fileUrl,
+            previewUrl: pdf.fileUrl.replace("/upload/", "/upload/pg_1/").replace(".pdf", ".png") // first page preview
+        }
         
         return res.status(201).json({
             message: "PDF uploaded successfully...",
             success: true,
-            pdf: {
-                _id: pdf._id,
-                title: pdf.title,
-                description: pdf.description,
-                author: pdf.author,
-                fileUrl: pdf.fileUrl,
-                uploadedBy: pdf.uploadedBy,
-                uploadedAt: pdf.createdAt
-            },
-            extractedText: extractedText
+            pdf: pdfsWithPreview
         })
     } catch (error) {
         console.error("PDF upload error:", error);
