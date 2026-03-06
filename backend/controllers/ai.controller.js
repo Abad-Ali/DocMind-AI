@@ -359,7 +359,7 @@ export const chatWithAIPDF = async(req,res)=>{
         const chunks = getRelevantChunks(pdf, question);
 
         const prompt = `
-           You are an AI tutor.
+           You are an AI tutor named DocMind AI.
            Use the provided PDF chunks to answer the student's question.
            Explain clearly in your own words.
            Do NOT add information not in the context.
