@@ -4,6 +4,8 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { useState } from "react";
 import { Button } from "@/components/ui/button"; // optional shadcn/ui
 import { Slider } from "@/components/ui/slider";
+import { Sparkles } from "lucide-react";
+import FeatureBar from "./FeatureBar";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
@@ -11,6 +13,7 @@ export default function PDFViewer({ url }) {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [zoom, setZoom] = useState(1);
+  const [show, setShow] = useState(false);
 
   return (
     <div className="space-y-4 p-5 rounded-xs shadow h-[99vh] w-xl bg-white/10 text-white">
@@ -22,6 +25,8 @@ export default function PDFViewer({ url }) {
           <Button className='cursor-pointer' onClick={() => setPageNumber(p => Math.min(p + 1, numPages))}>
             Next
           </Button>
+
+          <Button className='cursor-pointer' onClick={()=>setShow(!show)}><Sparkles/> Feature Bar</Button>
         </div>
     
         <div className="flex items-center gap-2">
@@ -39,7 +44,7 @@ export default function PDFViewer({ url }) {
         </div>
       </div>
     
-      <div className="border rounded overflow-auto h-[87vh] flex justify-center items-center bg-white/10">
+      <div className="relative border rounded overflow-auto h-[87vh] flex justify-center items-center bg-white/10">
         <Document file={url} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
           <Page
             pageNumber={pageNumber}
@@ -48,6 +53,8 @@ export default function PDFViewer({ url }) {
             renderAnnotationLayer={false}
             height={590}
           />
+         
+         <div className="flex justify-center"><FeatureBar show={show}/></div>
         </Document>
       </div>
     </div>
