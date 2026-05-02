@@ -9,7 +9,7 @@ import FeatureBar from "./FeatureBar";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
-export default function PDFViewer({ url }) {
+export default function PDFViewer({ url, pdfId }) {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [zoom, setZoom] = useState(1);
@@ -54,7 +54,7 @@ export default function PDFViewer({ url }) {
             height={590}
           />
          
-         <div className="flex justify-center"><FeatureBar show={show}/></div>
+         <div className="flex justify-center"><FeatureBar show={show} pdfId={pdfId}/></div>
         </Document>
       </div>
     </div>
