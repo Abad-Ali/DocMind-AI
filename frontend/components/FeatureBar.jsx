@@ -1,6 +1,7 @@
 import { setBookmarks } from '@/app/(main)/redux/authSlice';
 import axios from 'axios';
 import { BookMarkedIcon, CopyIcon, DownloadIcon, FileText, HelpCircle, LucideMail, MessageSquare, Share2 } from 'lucide-react'
+import Link from 'next/link';
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
@@ -61,6 +62,20 @@ const FeatureBar = ({show, pdfId}) => {
     }
   };
 
+  const sendMailHandler = async()=>{
+    try {
+      const res = await axios.post(`http://localhost:8000/api/v1/pdf/${pdfId}/sendemail`,{},{
+          withCredentials: true 
+        }
+      )
+
+      if(res.data.success){
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
   return (
     <div className='absolute bottom-3 bg-black/95 px-3 py-3 border-2 border-slate-400 rounded-2xl'>
       <div className='flex justify-center items-center gap-2 text-slate-100'>
@@ -70,8 +85,8 @@ const FeatureBar = ({show, pdfId}) => {
         <div onClick={copyLinkHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><CopyIcon/></div>
         <div onClick={bookmarkHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><BookMarkedIcon/></div>
         <div onClick={downloadPdfHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><DownloadIcon/></div>
-        <div className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><LucideMail/></div>
-        <div className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><MessageSquare/></div>
+        <div onClick={sendMailHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><LucideMail/></div>
+        <Link href={`/pdf/${pdfId}/chat`}><div className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><MessageSquare/></div></Link>
       </div>
     </div>
   )
