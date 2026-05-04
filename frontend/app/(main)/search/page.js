@@ -4,7 +4,7 @@ import axios from 'axios'
 import { ArrowRight, BrushCleaningIcon, GlobeIcon, SearchIcon, SearchXIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 const searchPage = () => {
@@ -17,6 +17,11 @@ const searchPage = () => {
   const handleChange = (e)=>{
     setInput({...input, [e.target.name]:e.target.value});
   };
+
+  const inputRef = useRef(null); // make input to take value without clicking
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const searchHandle = async(e)=>{
     e.preventDefault();
@@ -63,7 +68,7 @@ const searchPage = () => {
         
           <div className="flex justify-center mt-2 mb-3">
                 <form onSubmit={searchHandle} className="relative w-sm mt-5 mb-10">
-                  <Input name='title' value={input.title} onChange={handleChange} placeholder="Search PDFs using title" className="pr-10 rounded-full bg-white text-black font-semibold italic border-2 border-blue-700 py-5"/>
+                  <Input ref={inputRef} name='title' value={input.title} onChange={handleChange} placeholder="Search PDFs using title" className="pr-10 rounded-full bg-white text-black font-semibold italic border-2 border-blue-700 py-5"/>
                   <button disabled={loading} type='submit' className="absolute right-3 top-1/2 -translate-y-1/2"><SearchIcon className="h-4 w-4 text-blue-700" strokeWidth={3}/></button>
                 </form>
           </div>
