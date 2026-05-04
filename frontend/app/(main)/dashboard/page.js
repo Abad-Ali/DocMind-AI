@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import useGetUploadedPdfs from '@/hooks/useGetUploadedPdfs'
-import { Edit3Icon, FileEdit, InfoIcon, UploadCloud, UploadCloudIcon } from 'lucide-react'
+import { Edit3Icon, FileEdit, InfoIcon, Loader2Icon, UploadCloud, UploadCloudIcon } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -26,6 +26,7 @@ const Dashboardpage = () => {
         description:"",
         author:""
     });
+    const [isAgreed,setIsAgreed] = useState(false);
     const [uploadForm,setUploadForm] = useState(false);
 
     const pdfRef = useRef();
@@ -119,15 +120,19 @@ const Dashboardpage = () => {
     }
 
     const deletePdfHandler = async()=>{
+        setPdfAction("");
+        setloading(true);
         try {
             const res = await axios.post(`http://localhost:8000/api/v1/pdf/delete/${selectedPdf.id}`, {}, {withCredentials:true});
             if(res.data.success){
                 dispatch(removePdf(selectedPdf.id));
                 toast.success(res.data.message);
-                setOpen(false);
             }
         } catch (error) {
             toast.error(error.response.data.message);
+        }finally{
+            setloading(false);
+            setOpen(false);
         }
     }
 
@@ -154,6 +159,11 @@ const Dashboardpage = () => {
     const uploadPDFHandler = async()=>{
         setloading(true);
         console.log(input);
+        if(isAgreed === false){
+            toast.error("Please agree to the terms and conditions to continue.");
+            setloading(false);
+            return
+        }
         try {
             const formData = new FormData();
             formData.append("title", input.title);
@@ -172,10 +182,13 @@ const Dashboardpage = () => {
                     author:""
                 })
                 setUploadForm(false);
+                setIsAgreed(false);
             }
 
         } catch (error) {
             toast.error(error.response.data.message);
+        }finally{
+            setloading(false);
         }
     }
   return (
@@ -239,9 +252,22 @@ const Dashboardpage = () => {
                                         <Textarea type="description" name="description" value={input.description} onChange={handleChange} id='description' className='bg-white text-black max-h-16 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the description for PDF"/>
                                         <button disabled={loading} onClick={enhanceDescriptionHandler} className={`bg-slate-50 h-16 flex justify-center items-center rounded-r-lg ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}><AIOrb size={50}/></button>
                                     </div>
+                                    <div className='text-slate-400 text-sm flex'>
+                                        <input onClick={()=>setIsAgreed(true)} type="checkbox" className='mx-1 cursor-pointer'/>
+                                        <span className='flex gap-1'>
+                                          I agree to <p className='hover:text-blue-600 hover:underline'>Terms & Conditions</p>
+                                        </span>
+                                    </div>
                                 </div>
-    
-                                <Button onClick={uploadPDFHandler} type='button' className='mt-1 cursor-pointer'>Upload PDF</Button>
+                               
+                               {
+                                loading ? (
+                                    <Button disabled onClick={uploadPDFHandler} type='button' className='mt-1 cursor-pointer'><Loader2Icon className='animate-spin'/>Uploading PDF...</Button>
+                                ):(
+                                    <Button onClick={uploadPDFHandler} type='button' className='mt-1 cursor-pointer'>Upload PDF</Button>
+                                )
+                               }
+
                             </form>
                         </div> 
                     </div>
@@ -331,7 +357,13 @@ const Dashboardpage = () => {
                       <hr className='my-0.5'/>
                       <AlertDialogFooter>
                         <AlertDialogCancel className='cursor-pointer'>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={deletePdfHandler} className='cursor-pointer'>Delete PDF</AlertDialogAction>
+                        {
+                            loading ? (
+                                <AlertDialogAction disabled onClick={deletePdfHandler} className='cursor-pointer'><Loader2Icon className='animate-spin'/>Deleting PDF...</AlertDialogAction>
+                            ):(
+                                <AlertDialogAction onClick={deletePdfHandler} className='cursor-pointer'>Delete PDF</AlertDialogAction>
+                            )
+                        }
                       </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
@@ -357,7 +389,7 @@ const Dashboardpage = () => {
                                 <Label htmlFor="title" className='font-serif ml-1'>Title : </Label> 
                                 <div className='flex items-center'>
                                     <Input type="title" name="title" value={input.title} onChange={handleChange} id='title' className='bg-white text-black h-10 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the title for PDF"/>
-                                    <button disabled={loading} onClick={enhanceTitleHandler} className={`bg-slate-50 h-10 flex justify-center items-center rounded-r-lg ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}><AIOrb size={50}/></button>
+                                    <button type='button' disabled={loading} onClick={enhanceTitleHandler} className={`bg-slate-50 h-10 flex justify-center items-center rounded-r-lg ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}><AIOrb size={50}/></button>
                                 </div>
                             </div>
 
@@ -370,11 +402,17 @@ const Dashboardpage = () => {
                                 <Label htmlFor="description" className='font-serif ml-1'>Description :</Label> 
                                 <div className='flex items-center'>
                                     <Textarea type="description" name="description" value={input.description} onChange={handleChange} id='description' className='bg-white text-black max-h-16 rounded-l-lg rounded-r-none focus-visible:ring-transparent' required placeholder="Enter the description for PDF"/>
-                                    <button disabled={loading} onClick={enhanceDescriptionHandler} className={`bg-slate-50 h-16 flex justify-center items-center rounded-r-lg ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}><AIOrb size={50}/></button>
+                                    <button type='button' disabled={loading} onClick={enhanceDescriptionHandler} className={`bg-slate-50 h-16 flex justify-center items-center rounded-r-lg ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}><AIOrb size={50}/></button>
                                 </div>
                             </div>
 
-                            <Button type='submit' className='mt-1 cursor-pointer'>Update Details</Button>
+                            {
+                                loading ? (
+                                    <Button disabled type='submit' className='mt-1 cursor-pointer'><Loader2Icon className='animate-spin'/>Updating Details...</Button>
+                                ):(
+                                    <Button type='submit' className='mt-1 cursor-pointer'>Update Details</Button>
+                                )
+                            }
                         </form>
                     </div>
                   </DialogContent>
