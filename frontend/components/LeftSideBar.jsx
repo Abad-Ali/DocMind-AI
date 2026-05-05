@@ -28,25 +28,24 @@ const LeftSideBar = () => {
     router.push(path)
   }
   return (
-    <nav className='fixed top-0.5 bottom-0.5 z-20 bg-black/90 backdrop-blur-lg border-r-2 border-slate-500 hidden lg:flex justify-center w-[17rem]'>
-        <div>
-            <div className='mt-7 text-center'>
-                <div className='flex justify-center items-center'><Image src='/logo2.png' alt='logo' height={90} width={90}/></div>
-                <span className='text-2xl text-blue-600 font-bold font-serif'>DocMind AI</span>
-                <p className='text-xs text-slate-500 italic font-serif'>PDFs with AI Intelligence</p>
+    <nav className='fixed top-2 lg:top-0.5 lg:bottom-0.5 z-20 bg-black/90 backdrop-blur-lg border-x-2 border-slate-500/70 flex lg:justify-center w-3xl lg:w-[17rem] px-3 lg:px-0 py-2.5 lg:py-0 rounded-2xl lg:rounded-none'>
+        <div className='flex justify-evenly lg:justify-start w-full lg:flex-col'>
+            <div className='lg:mt-7 text-center flex justify-center items-center gap-1 lg:flex-col'>
+                <div className='flex justify-center items-center'><div className='w-10 h-10 lg:h-25 lg:w-25'><Image src='/logo2.png' alt='logo' height={90} width={90}/></div></div>
+                <span className='text-[17px] lg:text-2xl text-blue-600 font-bold font-serif whitespace-nowrap'>DocMind AI</span>
+                <p className='hidden lg:inline text-xs text-slate-500 italic font-serif'>PDFs with AI Intelligence</p>
             </div>
-            <div className='bg-slate-500 h-[2px] w-[17vw] mt-3 mb-7'/>
+            <div className='w-full flex justify-center items-center'><div className='bg-slate-500 h-[2px] w-[17vw] mt-3 mb-7 hidden lg:inline'/></div>
 
-            
             {
                 sidebarItems.map((item, index) => {
                    return (
                     <div onClick={()=>leftSideBarHandler(item.path)} key={index}>
-                        <div className='flex items-center gap-2 hover:bg-white/5 duration-300 px-3 py-1.5 rounded-sm text-white cursor-pointer mx-3 my-1'>
+                        <div className='flex items-center gap-0.5 lg:gap-2 hover:bg-white/5 duration-300 px-1.5 lg:px-3 py-1 lg:py-1.5 rounded-sm text-white cursor-pointer lg:mx-3 my-0.5'>
                             <span className='w-7 h-7 cursor-pointer'>{item.icon}</span>
                             <span className='font-semibold cursor-pointer text-[17px]'>
                               {
-                                item.text==="Profile" ? (<div className='text-blue-700 ml-1 font-black'>@{user.username}</div>):(<div>{item.text}</div>)
+                                item.text==="Profile" ? (<div className='text-blue-700 lg:ml-1 font-black hidden lg:inline'>@{user.username}</div>):(<div>{item.text}</div>)
                               }
                             </span>
                         </div>
