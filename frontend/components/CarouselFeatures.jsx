@@ -53,16 +53,16 @@ const features = [
 
 const CarouselFeatures = () => {
   return (
-    <div className='mt-10'>
+    <div className='mt-10 flex flex-col items-center'>
         <div className="text-center mb-5">
-          <h2 className="text-3xl font-bold text-white">
+          <h2 className="text-2xl lg:text-3xl font-bold text-white">
             Powerful PDF Tools at Your Fingertips
           </h2>
-          <p className="text-slate-400 mt-2">
+          <p className="text-[15px] lg:text-[17px] text-slate-400 mt-2">
             Effortlessly summarize, analyze, and manage PDFs with AI.
           </p>
         </div>
-        <div className="w-[70vw] h-full py-5">
+        <div className="w-[70vw] h-full lg:py-5">
           <Swiper
             modules={[Autoplay, Pagination]}
             spaceBetween={24}
