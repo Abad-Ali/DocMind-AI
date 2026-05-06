@@ -22,7 +22,7 @@ const LegalDialog = ({ title, children }) => {
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-slate-300 border-t-2 border-slate-500 pl-64">
+    <footer className="bg-black text-slate-300 border-t-2 border-slate-500 lg:pl-64">
       <div className="flex flex-col justify-center items-center p-7">
         <div className="flex flex-wrap justify-center items-center gap-4 mb-2 text-sm">
           
