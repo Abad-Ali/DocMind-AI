@@ -11,7 +11,7 @@ export default function Home() {
   useGetRecentPdfs();
   const router = useRouter();
   return (
-    <div className='w-full h-full lg:pt-[25vh] pt-[15vh] sm:pt-[14vh] lg:pl-64 [@media(min-width:1023px)_and_(max-width:1350px)]:pt-[10vh]'>
+    <div className='w-full h-full lg:pt-[20vh] pt-[15vh] sm:pt-[14vh] lg:pl-64 [@media(min-width:1023px)_and_(max-width:1350px)]:pt-[10vh]'>
         <div className="text-white flex justify-center items-center">
           <div className="flex flex-col lg:flex-row [@media(min-width:1023px)_and_(max-width:1350px)]:flex-col justify-center items-center gap-9">
             <div className="flex flex-col items-center lg:min-w-lg gap-3">
