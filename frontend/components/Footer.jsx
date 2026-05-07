@@ -24,7 +24,7 @@ const Footer = () => {
   return (
     <footer className="bg-black text-slate-300 border-t-2 border-slate-500 lg:pl-64">
       <div className="flex flex-col justify-center items-center p-7">
-        <div className="flex flex-wrap justify-center items-center gap-4 mb-2 text-sm">
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 mb-2 text-sm">
           
           <LegalDialog title="Terms & Conditions">
             <p>Welcome to DocMind AI. By using this platform, you agree to comply with the following terms:</p>
@@ -71,7 +71,7 @@ const Footer = () => {
 
         </div>
 
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center text-center">
           <span className="font-medium">&copy; {new Date().getFullYear()} DocMind AI</span>
           <p className="text-sm text-slate-400">Learn with Artificial Intelligence</p>
           <p className="text-sm text-slate-400">Built by a student for learning and research purposes.</p>
