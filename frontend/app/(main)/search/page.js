@@ -56,24 +56,24 @@ const searchPage = () => {
     return
   }
   return (
-    <div className='pt-[10vh] pl-64 flex flex-col items-center text-white min-h-screen'>
-        <div className="px-10 pb-10">
+    <div className='pt-[10vh] lg:pl-64 flex flex-col items-center text-white min-h-screen'>
+        <div className="px-10 pb-10 flex flex-col justify-center items-center">
 
           <div className="text-center mt-10">
-            <h1 className="text-4xl font-bold">Search PDFs</h1>
-            <p className="text-gray-500 mt-2 font-medium">
+            <h1 className="text-3xl lg:text-4xl font-bold">Search PDFs</h1>
+            <p className="text-gray-500 mt-2 font-medium text-[15px] lg:text-[17px]">
               Find documents by title or keyword
             </p>
           </div>
         
           <div className="flex justify-center mt-2 mb-3">
-                <form onSubmit={searchHandle} className="relative w-sm mt-5 mb-10">
+                <form onSubmit={searchHandle} className="relative  w-[60vw] lg:w-sm mt-5 mb-10">
                   <Input ref={inputRef} name='title' value={input.title} onChange={handleChange} placeholder="Search PDFs using title" className="pr-10 rounded-full bg-white text-black font-semibold italic border-2 border-blue-700 py-5"/>
                   <button disabled={loading} type='submit' className="absolute right-3 top-1/2 -translate-y-1/2"><SearchIcon className="h-4 w-4 text-blue-700" strokeWidth={3}/></button>
                 </form>
           </div>
         
-          <div className='bg-black/10 backdrop-blur-xs p-3 rounded-lg w-2xl border-2 border-slate-500'>
+          <div className='bg-black/10 backdrop-blur-xs p-3 rounded-lg w-[70vw] lg:w-2xl border-2 border-slate-500'>
             <div className='flex justify-between text-slate-300'>
               <span className='font-semibold'>Search Results : ({results.length})</span>
               <span onClick={cleanSearch} className='font-semibold flex gap-1 cursor-pointer hover:text-blue-700'><BrushCleaningIcon size={20}/>Clean</span>
@@ -135,8 +135,8 @@ const searchPage = () => {
 
       <div className='flex flex-col items-center pb-10'>
         <div className='flex flex-col items-center gap-1'>
-          <span className="text-3xl font-bold">Don't know what to search?</span>
-          <p className="text-slate-500 font-medium max-w-md">Explore trending and popular PDFs curated for you.</p>
+          <span className="text-2xl lg:text-3xl font-bold text-center">Don't know what to search?</span>
+          <p className="text-slate-500 font-medium max-w-md text-[15px] lg:text-[17px] text-center">Explore trending and popular PDFs curated for you.</p>
         </div>
         <button onClick={()=>router.push('/explore')} className="bg-blue-700 px-4 py-2.5 rounded-2xl font-semibold cursor-pointer flex gap-1 items-center mt-2 hover:bg-blue-800 duration-300"><GlobeIcon/> Explore New PDFs <ArrowRight/></button>
       </div>
