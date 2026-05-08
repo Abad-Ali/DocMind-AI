@@ -140,7 +140,7 @@ const AiBar = ({ pdfId }) => {
   }, [messages]);
 
   return (
-    <div className='absolute right-0 h-screen w-[25vw] border-l-2 border-slate-500 py-1 text-white flex flex-col overflow-hidden'>
+    <div className='hidden absolute right-0 h-screen w-[25vw] border-l-2 border-slate-500 py-1 text-white lg:flex flex-col overflow-hidden bg-black/10 backdrop-blur-xs backdrop-brightness-200'>
 
       <div className='flex items-center gap-1'>
         <AIOrb />
