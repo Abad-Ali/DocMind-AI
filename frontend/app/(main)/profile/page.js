@@ -120,9 +120,9 @@ const profilePage = () => {
     return <div className="pl-64 pt-[10vh] text-white">Loading profile...</div>;
   }
   return (
-    <div className='pl-64 pt-[10vh] text-white min-h-screen'>
+    <div className='lg:pl-64 pt-[10vh] text-white min-h-screen'>
       <div className='flex flex-col items-center'>
-        <div className='flex gap-5 mt-7'>
+        <div className='flex flex-col sm:flex-row gap-3 sm:gap-5 mt-7'>
             <div className='text-center'>
                 <div className='flex justify-center items-center'>
                     <Avatar className="h-[150px] w-[150px]">
@@ -130,14 +130,14 @@ const profilePage = () => {
                       <AvatarFallback>DI</AvatarFallback>
                     </Avatar>
                 </div>
-                {
+                {/* {
                   console.log(userProfile)
-                }
+                } */}
 
-                <div className='text-2xl text-blue-700 font-bold font-serif mt-1'><span className='text-xl text-slate-400'>Welcome back</span>&nbsp;{userProfile?.name || "User"}</div>
+                <div className='hidden sm:inline text-2xl text-blue-700 font-bold font-serif mt-1'><span className='text-xl text-slate-400'>Welcome back</span>&nbsp;{userProfile?.name || "User"}</div>
             </div>
 
-            <div className='flex flex-col justify-center'>
+            <div className='flex flex-col justify-center items-center sm:items-start'>
                 <div className='text-4xl font-serif font-bold flex items-center gap-2'>
                     @{userProfile.username}
 
@@ -157,11 +157,11 @@ const profilePage = () => {
             </div>
         </div>
 
-        <div className='flex gap-3 mt-5'>
-            <Button onClick={()=>router.push('/profile/edit')} className='!px-12 !py-5 font-bold cursor-pointer'><Edit strokeWidth={3}/>Edit Profile</Button>
+        <div className='flex flex-wrap justify-center gap-3 mt-5'>
+            <Button onClick={()=>router.push('/profile/edit')} className='!px-10 lg:!px-12 !py-5 font-bold cursor-pointer'><Edit strokeWidth={3}/>Edit Profile</Button>
             {
               userProfile.role === 'admin' ? (
-                <Button onClick={()=>router.push('/dashboard')} className='!px-12 !py-5 mx-2 font-bold cursor-pointer'><LayoutDashboard strokeWidth={3}/>Dashboard</Button>
+                <Button onClick={()=>router.push('/dashboard')} className='!px-10 lg:!px-12 !py-5 mx-2 font-bold cursor-pointer'><LayoutDashboard strokeWidth={3}/>Dashboard</Button>
               ):(
                 <div></div>
               )
@@ -169,11 +169,11 @@ const profilePage = () => {
 
             <Dialog>
               <DialogTrigger asChild>
-                <Button onClick={()=>setActiveButton('settings')} className='!px-12 !py-5 font-bold cursor-pointer'><Settings strokeWidth={3}/>Settings</Button>
+                <Button onClick={()=>setActiveButton('settings')} className='!px-10 lg:!px-12 !py-5 font-bold cursor-pointer'><Settings strokeWidth={3}/>Settings</Button>
               </DialogTrigger>
               {
                 activeButton === 'settings' && (
-                  <DialogContent className="sm:max-w-sm max-h-[70vh] overflow-y-auto bg-black/10 backdrop-blur-lg text-white">
+                  <DialogContent className="sm:max-w-sm max-h-[70vh] overflow-y-auto bg-black/10 backdrop-blur-lg backdrop-brightness-200 text-white">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-1.5 font-bold font-serif"><SettingsIcon className='animate-spin [animation-duration:.9.9s]' strokeWidth={3} size={20}/> Settings</DialogTitle>
                     </DialogHeader>
@@ -199,7 +199,7 @@ const profilePage = () => {
 
               {
                 activeButton === 'changePassword' && (
-                  <DialogContent className="sm:max-w-sm max-h-[75vh] overflow-y-auto bg-black/10 backdrop-blur-lg text-white">
+                  <DialogContent className="sm:max-w-sm max-h-[75vh] overflow-y-auto bg-black/10 backdrop-blur-lg backdrop-brightness-200 text-white">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-1.5 font-bold font-serif"><KeySquare size={17} strokeWidth={3}/>Change Password</DialogTitle>
                     </DialogHeader>
@@ -241,7 +241,7 @@ const profilePage = () => {
 
               {
                 activeButton === "becomeAdmin" && (
-                  <DialogContent className="sm:max-w-sm max-h-[75vh] overflow-y-auto bg-black/10 backdrop-blur-lg text-white">
+                  <DialogContent className="sm:max-w-sm max-h-[75vh] overflow-y-auto bg-black/10 backdrop-blur-lg backdrop-brightness-200 text-white">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-1.5 font-bold font-serif"><LucideCrown size={17} strokeWidth={3}/>Become Admin</DialogTitle>
                     </DialogHeader>
@@ -279,7 +279,7 @@ const profilePage = () => {
             </Dialog>
         </div>
 
-        <div className='w-2xl text-center'>
+        <div className='w-[87vw] lg:w-2xl text-center'>
             <div className='flex justify-center items-center gap-2 mt-14 mb-3'>
                 <span><BookMarkedIcon/></span>
                 <span className='font-semibold'>Bookmarked PDFS</span>
@@ -288,10 +288,10 @@ const profilePage = () => {
             {
               bookmarks.length > 0 ? (
                 <div className='my-7 flex justify-center items-center'>
-                    <div className="grid grid-cols-3 gap-5">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
                       {bookmarks.map(pdf => (
                           <div key={pdf.id}>
-                              <Link href={`/pdf/${pdf.id}`}><div className="relative w-[225] h-[300] rounded-2xl overflow-hidden">
+                              <Link href={`/pdf/${pdf.id}`}><div className="relative [@media(min-width:0px)_and_(max-width:549px)]:w-[165] w-[225] h-[300] rounded-2xl overflow-hidden">
                                   <img
                                     src={pdf.previewUrl}
                                     className="rounded-2xl w-full h-full"

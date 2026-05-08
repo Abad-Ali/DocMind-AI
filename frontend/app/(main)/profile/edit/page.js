@@ -78,10 +78,10 @@ const editProfilepage = () => {
       }
     }
   return (
-    <div className='pl-64 h-screen flex justify-center items-center'>
+    <div className='lg:pl-64 h-screen flex justify-center items-center my-10 lg:my-0'>
       <div className='flex flex-col justify-center items-center'>
-        <div className='w-3xl flex'>
-          <div className='w-full md:w-1/3 bg-slate-950 text-white p-8 flex flex-col items-center justify-center relative overflow-hidden rounded-l-2xl'>
+        <div className='w-[85vw] sm:w-[70vw] lg:w-3xl flex flex-col sm:flex-row border-2 border-slate-200/10 rounded-2xl'>
+          <div className='w-full sm:w-1/2 md:w-1/3 bg-slate-950 backdrop-brightness-200 text-white pt-8 sm:pt-0 p-5 sm:p-8 flex flex-col items-center justify-center relative overflow-hidden rounded-t-2xl sm:rounded-l-2xl'>
             <div className="relative z-10 flex flex-col items-center gap-4 cursor-pointer">
               <div className="relative group">
                 <img className="rounded-full w-32 h-32 object-cover border-4 border-white/20 shadow-lg transition-all duration-300 group-hover:border-white/40" src={userProfile?.profilePicture} alt="Profile"/>
@@ -98,9 +98,9 @@ const editProfilepage = () => {
             </div>
           </div>
 
-          <div className='bg-[#F8FAFC] w-2/3 rounded-r-2xl'>
+          <div className='bg-slate-100 sm:bg-[#F8FAFC] backdrop-brightness-200 w-full lg:w-2/3 rounded-b-2xl sm:rounded-r-2xl'>
             <div className='px-5'>
-              <div className='pt-8'>
+              <div className='pt-3 sm:pt-8'>
                 <h1 className="text-3xl font-bold text-slate-800">Edit Profile</h1>
                 <p className="text-slate-500 font-semibold">Keep your profile information up to date.</p>
                 <hr className='border-[0.5] border-slate-400 my-2'/>
