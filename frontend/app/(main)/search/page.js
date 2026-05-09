@@ -73,33 +73,33 @@ const searchPage = () => {
                 </form>
           </div>
         
-          <div className='bg-black/10 backdrop-blur-xs p-3 rounded-lg w-[70vw] lg:w-2xl border-2 border-slate-500'>
-            <div className='flex justify-between text-slate-300'>
+          <div className='bg-black/10 backdrop-blur-xs backdrop-brightness-200 p-3 rounded-lg w-[70vw] lg:w-2xl border-2 border-slate-500'>
+            <div className='flex flex-wrap justify-between text-slate-300'>
               <span className='font-semibold'>Search Results : ({results.length})</span>
               <span onClick={cleanSearch} className='font-semibold flex gap-1 cursor-pointer hover:text-blue-700'><BrushCleaningIcon size={20}/>Clean</span>
             </div>
 
-            <div className='flex justify-center min-h-56 max-h-56 my-7 overflow-y-scroll scroll-hide scrollable'>
+            <div className='flex justify-center min-h-56 max-h-10 my-7 overflow-y-scroll scroll-hide scrollable'>
               {results.length > 0 ? (
                 <div className="flex flex-wrap gap-4 justify-center items-center">
                   {results.map(pdf => (
-                    <div onClick={()=>router.push(`/pdf/${pdf.id}`)} key={pdf.id} className='flex gap-3 border-2 border-slate-500 rounded-xl px-3 py-3 pr-5 min-w-xl'>
+                    <div onClick={()=>router.push(`/pdf/${pdf.id}`)} key={pdf.id} className='flex items-center gap-3 border-2 border-slate-500 rounded-xl px-3 py-3 pr-5 sm:max-w-xl min-w-full lg:min-w-xl'>
                       <div className='w-[70px] h-[70px]'><img src={pdf.previewUrl} alt="pdf_img" className='w-full h-full rounded-sm'/></div>
 
                       <div className='w-full'>
                         <div className='text-sm font-semibold'>
-                          <span>Title: </span>
+                          <span className='text-slate-300'>Title: </span>
                           <span>{pdf.title}</span>
                         </div>
 
-                        <div className='text-sm font-semibold'>
-                          <span>Description: </span>
+                        <div className='text-sm font-semibold overflow-y-auto max-h-[75] scroll-hide scrollable'>
+                          <span className='text-slate-300'>Description: </span>
                           <span>{pdf.description}</span>
                         </div>
 
-                        <div className='flex justify-between items-center'>
+                        <div className='flex flex-wrap justify-between items-center'>
                           <div className='text-sm font-semibold'>
-                            <span>Author: </span>
+                            <span className='text-slate-300'>Author: </span>
                             <span>{pdf.author}</span>
                           </div>
 
