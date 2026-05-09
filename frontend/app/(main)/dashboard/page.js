@@ -209,7 +209,7 @@ const Dashboardpage = () => {
                 
                 {
                     activeButton === "upload" && (
-                        <div className='min-w-[60vw] min-h-[45vh] border-2 border-slate-500 border-y-slate-400 rounded-xl bg-black/10 backdrop-blur-lg flex flex-col items-center gap-1 justify-center cursor-pointer'>
+                        <div className='min-w-[60vw] min-h-[45vh] border-2 border-slate-500 border-y-slate-400 rounded-xl bg-black/10 backdrop-blur-xs backdrop-brightness-200 flex flex-col items-center gap-1 justify-center cursor-pointer'>
                             <Image className='mb-5' src='/PDF.png' alt='PDFpng' width={50} height={50} />
                             <span className='text-sm font-semibold text-slate-500'>Upload a PDF file here</span>
                             <span className='text-sm text-slate-500 flex items-center gap-1 px-3'>Supported file format is only PDF, size : 10MB <InfoIcon size={15} className='mt-0.5'/></span>
@@ -277,7 +277,7 @@ const Dashboardpage = () => {
 
                 {
                     activeButton === "edit" && (
-                        <div className='min-w-[80vw] lg:min-w-[60vw] lg:min-h-[60vh] border-2 border-slate-500 border-y-slate-400 rounded-xl bg-black/10 backdrop-blur-lg flex flex-col items-center gap-1 cursor-pointer'>
+                        <div className='min-w-[80vw] lg:min-w-[60vw] lg:min-h-[60vh] border-2 border-slate-500 border-y-slate-400 rounded-xl bg-black/10 backdrop-blur-xs backdrop-brightness-200 flex flex-col items-center gap-1 cursor-pointer'>
                             <div className="flex items-center gap-2 text-xl lg:text-2xl font-semibold py-3"><FileEdit className="w-7 h-7" />Select a PDF to Edit</div>
 
                             <section className='overflow-y-auto min-h-[50vh] min-w-[57vw] max-h-[50vh] max-w-[70vw] lg:max-w-[57vw] scroll-hide scrollable'>
