@@ -146,7 +146,7 @@ const Chatpage = () => {
   }, [messages]);
 
   return (
-    <div className='relative pl-67 h-screen w-full border-l-2 border-slate-500 py-1 text-white flex flex-col overflow-hidden'>
+    <div className='relative lg:pl-67 h-screen w-full border-l-2 border-slate-500 py-1 text-white flex flex-col overflow-hidden bg-black/10 backdrop-blur-xs backdrop-brightness-200 pb-2 lg:pb-0'>
 
       <div className='flex items-center'>
         <Link href={`/pdf/${pdfId}`}><div className='pl-3 text-slate-100 cursor-pointer hover:text-blue-700 duration-300'>
