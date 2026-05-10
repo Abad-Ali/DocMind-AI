@@ -7,6 +7,7 @@ import 'swiper/css/pagination';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { FileText, MessageSquare, Download, Mail, Shield, Sparkles, Upload, HelpCircle } from 'lucide-react';
+import {motion} from 'framer-motion';
 
 const features = [
   {
@@ -53,12 +54,12 @@ const features = [
 
 const CarouselFeatures = () => {
   return (
-    <div className='mt-10 flex flex-col items-center'>
+    <motion.div initial={{ opacity: 0, y: 70 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='mt-10 flex flex-col items-center'>
         <div className="text-center mb-5">
           <h2 className="text-2xl lg:text-3xl font-bold text-white">
             Powerful PDF Tools at Your Fingertips
           </h2>
-          <p className="text-[15px] lg:text-[17px] text-slate-400 mt-2">
+          <p className="text-[15px] lg:text-[17px] text-slate-400 mt-2 px-3">
             Effortlessly summarize, analyze, and manage PDFs with AI.
           </p>
         </div>
@@ -84,7 +85,7 @@ const CarouselFeatures = () => {
           >
             {features.map((item, index) => (
               <SwiperSlide key={index}>
-                <div className="group min-h-[250px] bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:scale-105 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 cursor-pointer text-white flex flex-col justify-evenly my-7">
+                <motion.div initial={{ opacity: 0, y: 40 }} viewport={{ once: false }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="group min-h-[250px] bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:scale-105 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 cursor-pointer text-white flex flex-col justify-evenly my-7">
                   
                   <div className="mb-4 text-white group-hover:scale-110 transition-transform duration-300">
                     {item.icon}
@@ -103,12 +104,12 @@ const CarouselFeatures = () => {
                       Explore
                     </Button>
                   </Link>
-                </div>
+                </motion.div>
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
-    </div>
+    </motion.div>
   );
 };
 
