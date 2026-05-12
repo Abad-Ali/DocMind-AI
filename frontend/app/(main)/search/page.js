@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
+import { motion } from 'framer-motion'
 
 const searchPage = () => {
   const [input,setInput] = useState({title:""});
@@ -60,30 +61,30 @@ const searchPage = () => {
         <div className="px-10 pb-10 flex flex-col justify-center items-center">
 
           <div className="text-center mt-10">
-            <h1 className="text-3xl lg:text-4xl font-bold">Search PDFs</h1>
-            <p className="text-gray-500 mt-2 font-medium text-[15px] lg:text-[17px]">
+            <motion.h1 initial={{ opacity: 0, x: -70 }} viewport={{ once: true }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }}  className="text-3xl lg:text-4xl font-bold">Search PDFs</motion.h1>
+            <motion.p initial={{ opacity: 0, x: 70 }} viewport={{ once: true }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }}  className="text-gray-500 mt-2 font-medium text-[15px] lg:text-[17px]">
               Find documents by title or keyword
-            </p>
+            </motion.p>
           </div>
         
-          <div className="flex justify-center mt-2 mb-3">
+          <motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="flex justify-center mt-2 mb-3">
                 <form onSubmit={searchHandle} className="relative  w-[60vw] lg:w-sm mt-5 mb-10">
                   <Input ref={inputRef} name='title' value={input.title} onChange={handleChange} placeholder="Search PDFs using title" className="pr-10 rounded-full bg-white text-black font-semibold italic border-2 border-blue-700 py-5"/>
                   <button disabled={loading} type='submit' className="absolute right-3 top-1/2 -translate-y-1/2"><SearchIcon className="h-4 w-4 text-blue-700" strokeWidth={3}/></button>
                 </form>
-          </div>
+          </motion.div>
         
-          <div className='bg-black/10 backdrop-blur-xs backdrop-brightness-200 p-3 rounded-lg w-[70vw] lg:w-2xl border-2 border-slate-500'>
+          <motion.div initial={{ opacity: 0, y: 40 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}  className='bg-black/10 backdrop-blur-xs backdrop-brightness-200 p-3 rounded-lg w-[70vw] lg:w-2xl border-2 border-slate-500'>
             <div className='flex flex-wrap justify-between text-slate-300'>
               <span className='font-semibold'>Search Results : ({results.length})</span>
               <span onClick={cleanSearch} className='font-semibold flex gap-1 cursor-pointer hover:text-blue-700'><BrushCleaningIcon size={20}/>Clean</span>
             </div>
 
-            <div className='flex justify-center min-h-56 max-h-10 my-7 overflow-y-scroll scroll-hide scrollable'>
+            <div className='flex justify-center min-h-56 max-h-10 my-7 overflow-y-scroll overflow-x-hidden scroll-hide scrollable'>
               {results.length > 0 ? (
                 <div className="flex flex-wrap gap-4 justify-center items-center">
-                  {results.map(pdf => (
-                    <div onClick={()=>router.push(`/pdf/${pdf.id}`)} key={pdf.id} className='flex items-center gap-3 border-2 border-slate-500 rounded-xl px-3 py-3 pr-5 sm:max-w-xl min-w-full lg:min-w-xl'>
+                  {results.map((pdf, index) => (
+                    <motion.div initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50  }} viewport={{ once: false }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }}  onClick={()=>router.push(`/pdf/${pdf.id}`)} key={pdf.id} className='flex items-center gap-3 border-2 border-slate-500 rounded-xl px-3 py-3 pr-5 sm:max-w-xl min-w-full lg:min-w-xl'>
                       <div className='w-[70px] h-[70px]'><img src={pdf.previewUrl} alt="pdf_img" className='w-full h-full rounded-sm'/></div>
 
                       <div className='w-full'>
@@ -109,7 +110,7 @@ const searchPage = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               ) : (
@@ -121,24 +122,24 @@ const searchPage = () => {
                       </div>
                     </div>
                   ):(
-                  <div className='text-center flex flex-col items-center justify-center'>
+                  <motion.div initial={{ opacity: 0, scale: 0 }} viewport={{ once: false }} whileInView={{ opacity: 0.5, scale: 1 }} transition={{ duration: 1.5, ease: "easeInOut" }} className='text-center flex flex-col items-center justify-center'>
                     <div className='w-fit p-3 rounded-full text-slate-500 border-4 border-slate-500'><SearchXIcon strokeWidth={3}/></div>
                     <span className='text-slate-500 text-xl font-bold mt-1'>No Search</span>
                     <p className='text-slate-500 font-semibold'>When you search result will be display here.</p>
-                  </div>
+                  </motion.div>
                 )
               )}
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
       <div className='flex flex-col items-center pb-10'>
         <div className='flex flex-col items-center gap-1'>
-          <span className="text-2xl lg:text-3xl font-bold text-center">Don't know what to search?</span>
-          <p className="text-slate-500 font-medium max-w-md text-[15px] lg:text-[17px] text-center">Explore trending and popular PDFs curated for you.</p>
+          <motion.span initial={{ opacity: 0, x: -70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="text-2xl lg:text-3xl font-bold text-center">Don't know what to search?</motion.span>
+          <motion.p initial={{ opacity: 0, x: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="text-slate-500 font-medium max-w-md text-[15px] lg:text-[17px] text-center">Explore trending and popular PDFs curated for you.</motion.p>
         </div>
-        <button onClick={()=>router.push('/explore')} className="bg-blue-700 px-4 py-2.5 rounded-2xl font-semibold cursor-pointer flex gap-1 items-center mt-2 hover:bg-blue-800 duration-300"><GlobeIcon/> Explore New PDFs <ArrowRight/></button>
+        <motion.button initial={{ opacity: 0, y: 20 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} onClick={()=>router.push('/explore')} className="bg-blue-700 px-4 py-2.5 rounded-2xl font-semibold cursor-pointer flex gap-1 items-center mt-2 hover:bg-blue-800 duration-300"><GlobeIcon/> Explore New PDFs <ArrowRight/></motion.button>
       </div>
     </div>
   )
