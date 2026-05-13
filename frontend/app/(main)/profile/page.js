@@ -16,6 +16,7 @@ import { setRecentPDF } from '../redux/recentPDFSlice';
 import { setPDF } from '../redux/pdfSlice';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { motion } from 'framer-motion';
 
 const profilePage = () => {
   const [activeButton, setActiveButton] = useState("");
@@ -124,40 +125,42 @@ const profilePage = () => {
       <div className='flex flex-col items-center'>
         <div className='flex flex-col sm:flex-row gap-3 sm:gap-5 mt-7'>
             <div className='text-center'>
-                <div className='flex justify-center items-center'>
-                    <Avatar className="h-[150px] w-[150px]">
-                      <AvatarImage src={userProfile?.profilePicture || '/logo1.png'} alt="Profile_pic"/>
-                      <AvatarFallback>DI</AvatarFallback>
-                    </Avatar>
-                </div>
+                <motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }} className='flex justify-center items-center'>
+                    <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", }}>
+                      <Avatar className="h-[150px] w-[150px] border-4 border-blue-600">
+                        <AvatarImage src={userProfile?.profilePicture || '/logo1.png'} alt="Profile_pic"/>
+                        <AvatarFallback>DI</AvatarFallback>
+                      </Avatar>
+                    </motion.div>
+                </motion.div>
                 {/* {
                   console.log(userProfile)
                 } */}
 
-                <div className='hidden sm:inline text-2xl text-blue-700 font-bold font-serif mt-1'><span className='text-xl text-slate-400'>Welcome back</span>&nbsp;{userProfile?.name || "User"}</div>
+                <motion.div initial={{ opacity: 0, x: -70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='hidden sm:inline text-2xl text-blue-700 font-bold font-serif mt-1'><span className='text-xl text-slate-400'>Welcome back</span>&nbsp;{userProfile?.name || "User"}</motion.div>
             </div>
 
             <div className='flex flex-col justify-center items-center sm:items-start'>
-                <div className='text-4xl font-serif font-bold flex items-center gap-2'>
+                <motion.div initial={{ opacity: 0, x: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='text-4xl font-serif font-bold flex items-center gap-2'>
                     @{userProfile.username}
 
                     <Badge className='font-bold'>{userProfile.role}</Badge>
-                </div>
+                </motion.div>
 
                 {/* <div className='text-2xl font-bold font-serif'>{user.name}</div> */}
-                <div className='text-xl text-slate-400 font-bold font-serif'>{userProfile.email}</div>
+                <motion.div initial={{ opacity: 0, x: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1.3, ease: "easeInOut" }} className='text-xl text-slate-400 font-bold font-serif'>{userProfile.email}</motion.div>
 
-                <span className="text-xs md:text-sm text-slate-400 font-semibold">
+                <motion.span initial={{ opacity: 0, x: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1.6, ease: "easeInOut" }} className="text-xs md:text-sm text-slate-400 font-semibold">
                   Joined on {new Date(userProfile?.createdAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
                   })}
-                </span>
+                </motion.span>
             </div>
         </div>
 
-        <div className='flex flex-wrap justify-center gap-3 mt-5'>
+        <motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='flex flex-wrap justify-center gap-3 mt-5'>
             <Button onClick={()=>router.push('/profile/edit')} className='!px-10 lg:!px-12 !py-5 font-bold cursor-pointer'><Edit strokeWidth={3}/>Edit Profile</Button>
             {
               userProfile.role === 'admin' ? (
@@ -277,21 +280,21 @@ const profilePage = () => {
                 )
               }
             </Dialog>
-        </div>
+        </motion.div>
 
         <div className='w-[87vw] lg:w-2xl text-center'>
-            <div className='flex justify-center items-center gap-2 mt-14 mb-3'>
+            <motion.div initial={{ opacity: 0, y: 10 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='flex justify-center items-center gap-2 mt-14 mb-3'>
                 <span><BookMarkedIcon/></span>
                 <span className='font-semibold'>Bookmarked PDFS</span>
-            </div>
-            <hr className='border-t-2 border-slate-500'/>
+            </motion.div>
+            <motion.hr initial={{ opacity: 0, scale: 0 }} viewport={{ once: true }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 1, ease: "easeInOut" }} className='border-t-2 border-slate-500'/>
             {
               bookmarks.length > 0 ? (
                 <div className='my-7 flex justify-center items-center'>
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
                       {bookmarks.map(pdf => (
                           <div key={pdf.id}>
-                              <Link href={`/pdf/${pdf.id}`}><div className="relative [@media(min-width:0px)_and_(max-width:549px)]:w-[165] w-[225] h-[300] rounded-2xl overflow-hidden">
+                              <Link href={`/pdf/${pdf.id}`}><motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="relative [@media(min-width:0px)_and_(max-width:549px)]:w-[165] w-[225] h-[300] rounded-2xl overflow-hidden">
                                   <img
                                     src={pdf.previewUrl}
                                     className="rounded-2xl w-full h-full"
@@ -319,19 +322,19 @@ const profilePage = () => {
                                           </div>
                                       </div>
                                   </div>
-                              </div></Link>
+                              </motion.div></Link>
                           </div>
                       ))}
                     </div>
                 </div>
               ):(
-                <div className='flex flex-col items-center my-10 gap-2'>
+                <motion.div initial={{ opacity: 0, scale: 0 }} viewport={{ once: true }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 1.5, ease: "easeInOut" }} className='flex flex-col items-center my-10 gap-2'>
                   <div className='p-3 rounded-full border-4 border-slate-500 w-fit h-fit'><BookmarkXIcon className='text-slate-500' size={30} strokeWidth={3}/></div>
                   <div>
                     <span className='text-slate-500 font-bold text-lg'>No Bookmarks To Show</span>
                     <p className='text-slate-500 font-semibold'>When you add bookmarks, they will appear on your profile.</p>
                   </div>
-                </div>
+                </motion.div>
               )
             }
         </div>
