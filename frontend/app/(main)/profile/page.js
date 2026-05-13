@@ -127,6 +127,16 @@ const profilePage = () => {
             <div className='text-center'>
                 <motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }} className='flex justify-center items-center'>
                     <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", }}>
+                      {/* Rotating border */}
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: 8,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        className="absolute inset-[-6px] rounded-full border-[3] border-e-blue-700 border-l-blue-700 border-b-[#0f172b] border-t-[#0f172b]"
+                      />
                       <Avatar className="h-[150px] w-[150px] border-4 border-blue-600">
                         <AvatarImage src={userProfile?.profilePicture || '/logo1.png'} alt="Profile_pic"/>
                         <AvatarFallback>DI</AvatarFallback>

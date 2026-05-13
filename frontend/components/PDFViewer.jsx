@@ -69,6 +69,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 import FeatureBar from "./FeatureBar";
+import { motion } from "framer-motion";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
@@ -95,7 +96,7 @@ export default function PDFViewer({ url, pdfId }) {
   }, []);
 
   return (
-    <div className="space-y-4 px-5 pt-5 shadow h-fit lg:h-[99vh] w-[85vw] sm:w-[70vw] lg:w-xl bg-white/10 text-white sm:mt-20 lg:mt-0  rounded-3xl lg:rounded-lg scrollable">
+    <motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="space-y-4 px-5 pt-5 shadow h-fit lg:h-[99vh] w-[85vw] sm:w-[70vw] lg:w-xl bg-white/10 text-white sm:mt-20 lg:mt-0  rounded-3xl lg:rounded-lg scrollable">
       
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex gap-2">
@@ -160,6 +161,6 @@ export default function PDFViewer({ url, pdfId }) {
       <div className="flex justify-center">
         <FeatureBar show={show} pdfId={pdfId} />
       </div>
-    </div>
+    </motion.div>
   );
 }

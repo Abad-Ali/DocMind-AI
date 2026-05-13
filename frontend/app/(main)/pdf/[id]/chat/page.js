@@ -8,6 +8,7 @@ import AIOrb from '@/components/AiAnimatedLogo'
 import { Button } from '@/components/ui/button'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 const Chatpage = () => {
   const params = useParams();
@@ -101,6 +102,7 @@ const Chatpage = () => {
     e.preventDefault();
     console.log(input);
     setLoading(true);
+    setInput({question:""});
     try {
       // Adding user message
       setMessages(prev => [...prev, { role: "user", content: `${input.question}` }]);
@@ -148,7 +150,7 @@ const Chatpage = () => {
   return (
     <div className='relative lg:pl-67 h-screen w-full border-l-2 border-slate-500 py-1 text-white flex flex-col overflow-hidden bg-black/10 backdrop-blur-xs backdrop-brightness-200 pb-2 lg:pb-0'>
 
-      <div className='flex items-center'>
+      <motion.div initial={{ opacity: 0, y: 20 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className='flex items-center'>
         <Link href={`/pdf/${pdfId}`}><div className='pl-3 text-slate-100 cursor-pointer hover:text-blue-700 duration-300'>
           <ArrowLeft size={25}/>
         </div></Link>
@@ -163,36 +165,36 @@ const Chatpage = () => {
             </span>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <hr className="border-slate-500 mx-3" />
 
       <div ref={containerRef} className='flex-1 mx-3 my-2 overflow-y-auto space-y-4 py-2 scroll-hide scrollable pb-15'>
 
-        <div className='absolute bottom-10 flex justify-start items-center w-full gap-3 z-10'>
-          <Button disabled={loading} onClick={summaryHandle} className="px-5 py-0.5 rounded-4xl text-sm cursor-pointer border-2 border-blue-700">
+        <motion.div initial={{ opacity: 0, y: 20 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='absolute bottom-10 flex justify-start items-center w-full gap-3 z-10'>
+          <Button disabled={loading} onClick={summaryHandle} className="px-5 py-0.5 rounded-4xl text-sm cursor-pointer border-2 border-blue-700 hover:scale-105 duration-300">
             Summary
           </Button>
         
-          <Button disabled={loading} onClick={QAHandle} className="px-5 py-0.5 rounded-4xl text-sm cursor-pointer border-2 border-green-500">
+          <Button disabled={loading} onClick={QAHandle} className="px-5 py-0.5 rounded-4xl text-sm cursor-pointer border-2 border-green-500 hover:scale-105 duration-300">
             Questions
           </Button>
-        </div>
+        </motion.div>
       
         {messages.map((msg, index) => (
           <div key={index}className={`flex items-end gap-1 ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
             
             {/* AI Avatar */}
             {msg.role === "ai" && (
-              <div>
+              <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", }}>
                 <AIOrb size={55} />
-              </div>
+              </motion.div>
             )}
       
             {/* Message Bubble */}
-            <div className={`max-w-[75%] px-4 py-2 rounded-3xl whitespace-pre-line text-sm ${msg.role === "user" ? "bg-blue-600 text-white rounded-br-xs" : "bg-[#0f172b] text-white rounded-bl-xs"}`}>
+            <motion.div initial={{ opacity: 0, y: 15, scale: 0.95, x: msg.role === "user" ? 30 : -30, filter: "blur(4px)" }} animate={{ opacity: 1, y: 0, scale: 1, x: 0, filter: "blur(0px)" }} transition={{ type: "spring", stiffness: 140, damping: 16 }} whileHover={{ scale: 1.01 }} className={`max-w-[75%] px-4 py-2 rounded-3xl whitespace-pre-line text-sm ${msg.role === "user" ? "bg-blue-600 text-white rounded-br-xs" : "bg-[#0f172b] text-white rounded-bl-xs"}`}>
               {msg.content}
-            </div>
+            </motion.div>
       
             {/* User Avatar */}
             {msg.role === "user" && (
@@ -217,12 +219,12 @@ const Chatpage = () => {
       
       </div>
 
-      <form onSubmit={chatHandle} className='flex items-center mx-2 border p-1 border-slate-500 rounded-lg'>
+      <motion.form initial={{ opacity: 0, y: 20 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} onSubmit={chatHandle} className='flex items-center mx-2 border p-1 border-slate-500 rounded-lg'>
         <input name='question' value={input.question} onChange={handleChange} className='outline-none w-full px-1 py-1 bg-transparent' placeholder="Ask your question here..." required/>
         <button disabled={loading} type='submit'>
           <SendIcon size={20} className='hover:text-blue-700 cursor-pointer mr-2'/>
         </button>
-      </form>
+      </motion.form>
 
     </div>
   )

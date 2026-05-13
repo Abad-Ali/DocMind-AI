@@ -5,7 +5,7 @@ import {motion} from 'framer-motion';
 
 const DevelopedBy = () => {
   return (
-    <motion.div initial={{ opacity: 0, y: 70 }} viewport={{ once: true }} whileInView={{ opacity: 2, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
+    <motion.div initial={{ opacity: 0, y: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 2, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
         <div className="text-center mb-8">
           <h2 className="text-2xl lg:text-3xl font-bold text-white">
             DocMind AI developed By

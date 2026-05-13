@@ -5,6 +5,7 @@ import Link from 'next/link';
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
 
 const FeatureBar = ({show, pdfId}) => {
   if (!show) return null;
@@ -77,18 +78,18 @@ const FeatureBar = ({show, pdfId}) => {
     }
   }
   return (
-    <div className='absolute bottom-3 bg-black/95 px-3 py-3 border-2 border-slate-400 rounded-2xl'>
+    <motion.div initial={{ opacity: 0, y: 50 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='absolute bottom-3 bg-black/95 px-3 py-3 border-2 border-slate-400 rounded-2xl'>
       <div className='flex justify-center items-center gap-2 text-slate-100'>
         {/* <div className='p-2 bg-black/10 rounded-lg border-2 border-slate-400 hover:scale-110 duration-300 cursor-pointer'><FileText/></div> */}
         {/* <div className='p-2 bg-black/10 rounded-lg border-2 border-slate-400 hover:scale-110 duration-300 cursor-pointer'><HelpCircle/></div> */}
-        <div onClick={handleShare} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><Share2/></div>
-        <div onClick={copyLinkHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><CopyIcon/></div>
-        <div onClick={bookmarkHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><BookMarkedIcon/></div>
-        <div onClick={downloadPdfHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><DownloadIcon/></div>
-        <div onClick={sendMailHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><LucideMail/></div>
-        <Link href={`/pdf/${pdfId}/chat`}><div className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer'><MessageSquare/></div></Link>
+        <motion.div initial={{ opacity: 0, y: -10 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }} onClick={handleShare} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer group'><Share2 className='group-hover:text-blue-600 group-hover:scale-120 duration-300'/></motion.div>
+        <motion.div initial={{ opacity: 0, y: -10 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 2, ease: "easeInOut" }} onClick={copyLinkHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer group'><CopyIcon className='group-hover:text-blue-600 group-hover:scale-120 duration-300'/></motion.div>
+        <motion.div initial={{ opacity: 0, y: -10 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 2.5, ease: "easeInOut" }} onClick={bookmarkHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer group'><BookMarkedIcon className='group-hover:text-blue-600 group-hover:scale-120 duration-300'/></motion.div>
+        <motion.div initial={{ opacity: 0, y: -10 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 3, ease: "easeInOut" }} onClick={downloadPdfHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer group'><DownloadIcon className='group-hover:text-blue-600 group-hover:scale-120 duration-300'/></motion.div>
+        <motion.div initial={{ opacity: 0, y: -10 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 3.2, ease: "easeInOut" }} onClick={sendMailHandler} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer group'><LucideMail className='group-hover:text-blue-600 group-hover:scale-120 duration-300'/></motion.div>
+        <Link href={`/pdf/${pdfId}/chat`}><motion.div initial={{ opacity: 0, y: -10 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 3.4, ease: "easeInOut" }} className='p-2 bg-[#0f172b] rounded-lg border-2 border-blue-700 hover:scale-110 duration-300 cursor-pointer group'><MessageSquare className='group-hover:text-blue-600 group-hover:scale-120 duration-300'/></motion.div></Link>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

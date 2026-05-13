@@ -9,7 +9,7 @@ const RecentPdfs = () => {
 
   return (
     <div className="text-white flex flex-col gap-7">
-        <motion.div initial={{ opacity: 0, y: 40 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="flex justify-center">
+        <motion.div initial={{ opacity: 0, y: 40 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="flex justify-center">
             <span className="text-3xl lg:text-4xl font-bold font-serif text-center px-2">Recently Uploaded PDFs</span>
         </motion.div>
 
@@ -17,12 +17,12 @@ const RecentPdfs = () => {
         <div className="grid [@media(min-width:0px)_and_(max-width:415px)]:grid-cols-1 grid-cols-2 sm:grid-cols-3 [@media(min-width:1023px)_and_(max-width:1350px)]:grid-cols-3 lg:grid-cols-4 gap-3">
             {recentPDF.map(pdf => (
                 <div key={pdf.id} onClick={()=>router.push(`pdf/${pdf.id}`)}>
-                    <motion.div initial={{ opacity: 0, y: 80 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="relative [@media(min-width:0px)_and_(max-width:415px)]:w-[270] w-[207] lg:w-[245] h-[310] lg:h-[300] rounded-2xl overflow-hidden cursor-pointer hover:scale-105 duration-300">
+                    <motion.div initial={{ opacity: 0, y: 80 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="relative [@media(min-width:0px)_and_(max-width:415px)]:w-[270] w-[207] lg:w-[245] h-[310] lg:h-[300] rounded-2xl overflow-hidden cursor-pointer hover:scale-105 duration-300">
                         <img
                           src={pdf.previewUrl}
                           className="rounded-2xl w-full h-full"
                         />
-                        <motion.div initial={{ opacity: 0, y: 70 }} viewport={{ once: true }} whileInView={{ opacity: 2, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="absolute bottom-0 bg-black/20 backdrop-blur-lg min-w-full min-h-[200] rounded-2xl text-black">
+                        <motion.div initial={{ opacity: 0, y: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 2, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="absolute bottom-0 bg-black/20 backdrop-blur-lg min-w-full min-h-[200] rounded-2xl text-black">
                             <div className="m-3 mt-5">
                                 <div>
                                     <span className="text-[17px] font-serif font-semibold">Title: </span>

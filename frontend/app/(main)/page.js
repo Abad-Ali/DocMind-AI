@@ -15,7 +15,7 @@ export default function Home() {
     <div className='w-full h-full lg:pt-[20vh] pt-[15vh] sm:pt-[14vh] lg:pl-64 [@media(min-width:1023px)_and_(max-width:1350px)]:pt-[10vh]'>
         <div className="text-white flex justify-center items-center">
           <div className="flex flex-col lg:flex-row [@media(min-width:1023px)_and_(max-width:1350px)]:flex-col justify-center items-center gap-9">
-            <motion.div initial={{ opacity: 0, x: -70 }} viewport={{ once: true }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="flex flex-col items-center lg:min-w-lg gap-3">
+            <motion.div initial={{ opacity: 0, x: -70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="flex flex-col items-center lg:min-w-lg gap-3">
               <div className='flex justify-start lg:w-full lg:ml-2'><span className="text-4xl font-bold font-serif text-start">Welcome to </span></div>
               <div className='flex justify-start lg:w-full lg:ml-36'><span className="text-4xl font-bold font-serif text-blue-700"><Typewriter
                 options={{
@@ -32,7 +32,7 @@ export default function Home() {
     
               <button onClick={()=>router.push('/explore')} className="bg-blue-700 px-4 py-2.5 rounded-2xl font-semibold cursor-pointer flex gap-1 items-center hover:bg-blue-800 duration-300"><GlobeIcon/> Explore Now For Free <ArrowRight/></button>
             </motion.div>
-            <motion.div initial={{ opacity: 0, x: 70 }} viewport={{ once: true }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="">
+            <motion.div initial={{ opacity: 0, x: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="">
               <Image src='/mainimg.svg' alt='main_img' height={400} width={400}/>
             </motion.div>
           </div>

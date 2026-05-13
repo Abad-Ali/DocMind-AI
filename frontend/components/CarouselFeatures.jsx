@@ -85,7 +85,7 @@ const CarouselFeatures = () => {
           >
             {features.map((item, index) => (
               <SwiperSlide key={index}>
-                <motion.div initial={{ opacity: 0, y: 40 }} viewport={{ once: false }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="group min-h-[250px] bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:scale-105 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 cursor-pointer text-white flex flex-col justify-evenly my-7">
+                <motion.div initial={{ opacity: 0, y: 40 }} viewport={{ once: false, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="group min-h-[250px] bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:scale-105 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 cursor-pointer text-white flex flex-col justify-evenly my-7">
                   
                   <div className="mb-4 text-white group-hover:scale-110 transition-transform duration-300">
                     {item.icon}
