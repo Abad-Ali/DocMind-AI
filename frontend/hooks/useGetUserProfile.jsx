@@ -9,7 +9,7 @@ const useGetUserProfile = () => {
   useEffect(()=>{
     const fetchUserProfile = async()=>{
         try {
-            const res = await axios.get(`http://localhost:8000/api/v1/user/myprofile`, {withCredentials:true});
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/myprofile`, {withCredentials:true});
             if(res.data.success){
                 // console.log(res.data);
                 dispatch(setUserProfile(res.data.user));            

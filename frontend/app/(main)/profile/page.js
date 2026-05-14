@@ -46,7 +46,7 @@ const profilePage = () => {
     console.log(input);
     setloading(true);
     try {
-      const res = await axios.post(`http://localhost:8000/api/v1/user/changepassword`, input,{
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/changepassword`, input,{
         headers:{
           'Content-Type':'application/json'
         },
@@ -77,7 +77,7 @@ const profilePage = () => {
     console.log(adminInput);
     setloading(true);
     try {
-      const res = await axios.post(`http://localhost:8000/api/v1/user/become-admin`, adminInput,{
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/become-admin`, adminInput,{
         headers:{
           'Content-Type':'application/json'
         },
@@ -100,7 +100,7 @@ const profilePage = () => {
 
   const logoutHandler = async()=>{
     try {
-      const res = await axios.get(`http://localhost:8000/api/v1/user/logout`, {withCredentials:true});
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/logout`, {withCredentials:true});
 
       if(res.data.success){
         dispatch(setAuthUser(null));

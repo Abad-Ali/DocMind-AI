@@ -51,7 +51,7 @@ const editProfilepage = () => {
         formData.append("profilePicture", input?.profilePicture);
       }
       try {
-        const res = await axios.put(`http://localhost:8000/api/v1/user/profile/edit`, formData,{
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/profile/edit`, formData,{
           // headers:{
           //   'Content-Type':'multipart/form-data'
           // },

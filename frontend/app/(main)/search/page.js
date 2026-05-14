@@ -29,7 +29,7 @@ const searchPage = () => {
     // console.log(input)
     setloading(true);
     try {
-      const res = await axios.post(`http://localhost:8000/api/v1/pdf/search`, input,{
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/search`, input,{
         headers:{
             'Content-Type':'application/json'
         },

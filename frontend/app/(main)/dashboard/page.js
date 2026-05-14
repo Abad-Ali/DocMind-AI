@@ -61,7 +61,7 @@ const Dashboardpage = () => {
         console.log(input);
         setloading(true);
         try {
-            const res = await axios.put(`http://localhost:8000/api/v1/pdf/edit/${selectedPdf.id}`, input, {withCredentials:true});
+            const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/edit/${selectedPdf.id}`, input, {withCredentials:true});
 
             if(res.data.success){
                 const updatedPdf = res.data.pdf;
@@ -90,7 +90,7 @@ const Dashboardpage = () => {
         setloading(true)
         setInput(prev => ({ ...prev, title: "AI is thinking..."}));
         try {
-            const res = await axios.post(`http://localhost:8000/api/v1/pdf/enhance-title`, {title : input.title}, {withCredentials:true});
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/enhance-title`, {title : input.title}, {withCredentials:true});
             if(res.data.success){
                 const aiTitle = res.data.aiEnhanceTitle;
                 setInput(prev => ({ ...prev, title: aiTitle}));
@@ -107,7 +107,7 @@ const Dashboardpage = () => {
         setloading(true)
         setInput(prev => ({ ...prev, description: "AI is thinking..."}));
         try {
-            const res = await axios.post(`http://localhost:8000/api/v1/pdf/enhance-description`, {description : input.description}, {withCredentials:true});
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/enhance-description`, {description : input.description}, {withCredentials:true});
             if(res.data.success){
                 const aiDescription = res.data.aiEnhanceDescription;
                 setInput(prev => ({ ...prev, description: aiDescription}));
@@ -124,7 +124,7 @@ const Dashboardpage = () => {
         setPdfAction("");
         setloading(true);
         try {
-            const res = await axios.post(`http://localhost:8000/api/v1/pdf/delete/${selectedPdf.id}`, {}, {withCredentials:true});
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/delete/${selectedPdf.id}`, {}, {withCredentials:true});
             if(res.data.success){
                 dispatch(removePdf(selectedPdf.id));
                 toast.success(res.data.message);
@@ -172,7 +172,7 @@ const Dashboardpage = () => {
             formData.append("author", input.author);
             formData.append("pdfFile", selectedPdf);
 
-            const res = await axios.post(`http://localhost:8000/api/v1/pdf/upload`, formData, {withCredentials:true});
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/upload`, formData, {withCredentials:true});
 
             if(res.data.success){
                 dispatch(addPdf(res.data.pdf))

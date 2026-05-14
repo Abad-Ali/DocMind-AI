@@ -1,6 +1,6 @@
 import { setBookmarks } from '@/app/(main)/redux/authSlice';
 import axios from 'axios';
-import { BookMarkedIcon, CopyIcon, DownloadIcon, FileText, HelpCircle, LucideMail, MessageSquare, Share2 } from 'lucide-react'
+import { BookMarkedIcon, CopyIcon, DownloadIcon, LucideMail, MessageSquare, Share2 } from 'lucide-react'
 import Link from 'next/link';
 import React from 'react'
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ const FeatureBar = ({show, pdfId}) => {
 
   const bookmarkHandler = async()=>{
     try {
-      const res = await axios.get(`http://localhost:8000/api/v1/pdf/${pdfId}/bookmark`,{
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/${pdfId}/bookmark`,{
           withCredentials: true 
         }
       )
@@ -33,7 +33,7 @@ const FeatureBar = ({show, pdfId}) => {
       //     withCredentials: true 
       //   }
       // )
-      window.open(`http://localhost:8000/api/v1/pdf/download/${pdfId}`);
+      window.open(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/download/${pdfId}`);
     } catch (error) {
       const message = error.response?.data?.message || error.message || "Something went wrong";
       toast.error(message);
@@ -65,7 +65,7 @@ const FeatureBar = ({show, pdfId}) => {
 
   const sendMailHandler = async()=>{
     try {
-      const res = await axios.post(`http://localhost:8000/api/v1/pdf/${pdfId}/sendemail`,{},{
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/${pdfId}/sendemail`,{},{
           withCredentials: true 
         }
       )

@@ -9,7 +9,7 @@ const useGetPDF = (pdfId) => {
   useEffect(()=>{
     const fetchPDF = async()=>{
         try {
-            const res = await axios.get(`http://localhost:8000/api/v1/pdf/getpdf/${pdfId}`, {withCredentials:true});
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/getpdf/${pdfId}`, {withCredentials:true});
             if(res.data.success){
                 // console.log(res.data);
                 dispatch(setPDF(res.data.pdf));            

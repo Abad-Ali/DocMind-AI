@@ -28,7 +28,7 @@ const verifyEmailHandler = async(e)=>{
     // console.log(input);
     setloading(true);
     try {
-        const res = await axios.post(`http://localhost:8000/api/v1/user/verifyemail`, input,{
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/verifyemail`, input,{
             headers:{
                 'Content-Type':'application/json'
             },

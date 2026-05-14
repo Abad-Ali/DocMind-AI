@@ -21,7 +21,7 @@ const AiBar = ({ pdfId }) => {
       // Adding user message
       setMessages(prev => [...prev, {role: "user", content: "Give me summary"}]);
 
-      const res = await axios.post(`http://localhost:8000/api/v1/pdf/${pdfId}/summary`,{},{ 
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/${pdfId}/summary`,{},{ 
           withCredentials: true 
         }
       );
@@ -51,7 +51,7 @@ const AiBar = ({ pdfId }) => {
       // Adding user message
       setMessages(prev => [...prev, { role: "user", content: "Generate questions" }]);
 
-      const res = await axios.post(`http://localhost:8000/api/v1/pdf/${pdfId}/questions`,{},{
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/${pdfId}/questions`,{},{
           withCredentials: true 
         }
       );
@@ -101,7 +101,7 @@ const AiBar = ({ pdfId }) => {
       // Adding user message
       setMessages(prev => [...prev, { role: "user", content: `${input.question}` }]);
 
-      const res = await axios.post(`http://localhost:8000/api/v1/pdf/${pdfId}/chat`, input ,{
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/pdf/${pdfId}/chat`, input ,{
         headers:{
           "Content-Type":'application/json'
         },
