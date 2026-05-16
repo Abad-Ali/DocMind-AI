@@ -138,7 +138,7 @@ const profilePage = () => {
                         className="absolute inset-[-6px] rounded-full border-[3] border-e-blue-700 border-l-blue-700 border-b-[#0f172b] border-t-[#0f172b]"
                       />
                       <Avatar className="h-[150px] w-[150px] border-4 border-blue-600">
-                        <AvatarImage src={userProfile?.profilePicture || '/logo1.png'} alt="Profile_pic"/>
+                        <AvatarImage src={userProfile?.profilePicture || '/default_pic.jpg'} alt="Profile_pic"/>
                         <AvatarFallback>DI</AvatarFallback>
                       </Avatar>
                     </motion.div>
@@ -192,7 +192,7 @@ const profilePage = () => {
                     </DialogHeader>
                     <div className='w-full text-center'>
                       <div className='flex flex-col items-center justify-center gap-1'>
-                        <img className='rounded-full' src={userProfile.profilePicture} width={100} height={100} alt='profile_pic'/>
+                        <img className='rounded-full' src={userProfile.profilePicture || '/default_pic.jpg'} width={100} height={100} alt='profile_pic'/>
                         <div>
                           <h2 className='text-2xl text-blue-700 font-bold font-serif'>@{userProfile.username}</h2>
                           <span className='text-slate-400'>{userProfile.email}</span>
@@ -218,7 +218,7 @@ const profilePage = () => {
                     </DialogHeader>
                     <div className='w-full text-center'>
                       <div className='flex flex-col items-center justify-center gap-1'>
-                        <img className='rounded-full' src={userProfile.profilePicture} width={100} height={100} alt='profile_pic'/>
+                        <img className='rounded-full' src={userProfile.profilePicture || '/default_pic.jpg'} width={100} height={100} alt='profile_pic'/>
                         <div>
                           <h2 className='text-2xl text-blue-700 font-bold font-serif'>@{userProfile.username}</h2>
                           <span className='text-slate-400'>{userProfile.email}</span>
@@ -260,7 +260,7 @@ const profilePage = () => {
                     </DialogHeader>
                     <div className='w-full text-center'>
                       <div className='flex flex-col items-center justify-center gap-1'>
-                        <img className='rounded-full' src={userProfile.profilePicture} width={100} height={100} alt='profile_pic'/>
+                        <img className='rounded-full' src={userProfile.profilePicture || '/default_pic.jpg'} width={100} height={100} alt='profile_pic'/>
                         <div>
                           <h2 className='text-2xl text-blue-700 font-bold font-serif'>@{userProfile.username}</h2>
                           <span className='text-slate-400'>{userProfile.email}</span>

@@ -85,7 +85,7 @@ const editProfilepage = () => {
           <motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='w-full sm:w-1/2 md:w-1/3 bg-slate-950 backdrop-brightness-200 text-white pt-8 sm:pt-0 p-5 sm:p-8 flex flex-col items-center justify-center relative overflow-hidden rounded-t-2xl sm:rounded-l-2xl'>
             <div className="relative z-10 flex flex-col items-center gap-4 cursor-pointer">
               <div className="relative group">
-                <img className="rounded-full w-32 h-32 object-cover border-4 border-white/20 shadow-lg transition-all duration-300 group-hover:border-white/40" src={userProfile?.profilePicture} alt="Profile"/>
+                <img className="rounded-full w-32 h-32 object-cover border-4 border-white/20 shadow-lg transition-all duration-300 group-hover:border-white/40" src={userProfile?.profilePicture || '/default_pic.jpg'} alt="Profile"/>
                 <input ref={imageRef} onChange={fileChangeHandler} type="file" className="hidden" accept="image/*" />
                 <button onClick={()=>imageRef.current.click()} className="absolute bottom-1 right-1 bg-white text-slate-900 p-2 rounded-full shadow-md hover:bg-slate-100 transition-colors" aria-label="Change profile photo">
                   <Camera size={18} className='cursor-pointer'/>

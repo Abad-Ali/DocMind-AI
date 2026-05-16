@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import useGetUploadedPdfs from '@/hooks/useGetUploadedPdfs'
-import { Edit3Icon, FileEdit, InfoIcon, Loader2Icon, UploadCloud, UploadCloudIcon } from 'lucide-react'
+import { Edit3Icon, FileEdit, FolderOpen, InfoIcon, Loader2Icon, UploadCloud, UploadCloudIcon } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -282,43 +282,55 @@ const Dashboardpage = () => {
                             <div className="flex items-center gap-2 text-xl lg:text-2xl font-semibold py-3"><FileEdit className="w-7 h-7" />Select a PDF to Edit</div>
 
                             <section className='overflow-y-auto min-h-[50vh] min-w-[57vw] max-h-[50vh] max-w-[70vw] lg:max-w-[57vw] scroll-hide scrollable'>
-                                <div className='flex justify-center items-center gap-0 flex-wrap'>
-                                    {
-                                      uploadedPDFS.map(pdf => (
-                                            <div onClick={()=>selectpdfHandler(pdf)} key={pdf.id}>
-                                                <motion.div initial={{ opacity: 0, y: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="relative w-[200] lg:w-[250] h-[270] lg:h-[300] rounded-2xl overflow-hidden scale-95 hover:scale-100 duration-300 border-2 hover:border-blue-700">
-                                                    <img
-                                                      src={pdf.previewUrl}
-                                                      className="rounded-2xl w-full h-full"
-                                                    />
-                                                    <div className="absolute bottom-0 bg-black/20 backdrop-blur-lg min-w-full min-h-[200] rounded-2xl text-black">
-                                                        <div className="m-3 mt-5">
-                                                            <div>
-                                                                <span className="text-[17px] font-serif font-semibold">Title: </span>
-                                                                <span className="text-[17px] font-sans font-semibold">{pdf.title}</span>
+                                
+                                {
+                                    uploadedPDFS.length > 0 ? (
+                                        <div className='flex justify-center items-center gap-0 flex-wrap'>
+                                            {
+                                              uploadedPDFS.map(pdf => (
+                                                    <div onClick={()=>selectpdfHandler(pdf)} key={pdf.id}>
+                                                        <motion.div initial={{ opacity: 0, y: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="relative w-[200] lg:w-[250] h-[270] lg:h-[300] rounded-2xl overflow-hidden scale-95 hover:scale-100 duration-300 border-2 hover:border-blue-700">
+                                                            <img
+                                                              src={pdf.previewUrl}
+                                                              className="rounded-2xl w-full h-full"
+                                                            />
+                                                            <div className="absolute bottom-0 bg-black/20 backdrop-blur-lg min-w-full min-h-[200] rounded-2xl text-black">
+                                                                <div className="m-3 mt-5">
+                                                                    <div>
+                                                                        <span className="text-[17px] font-serif font-semibold">Title: </span>
+                                                                        <span className="text-[17px] font-sans font-semibold">{pdf.title}</span>
+                                                                    </div>
+            
+                                                                    <div className='overflow-y-auto max-h-[75] scroll-hide scrollable'>
+                                                                        <span className="text-[17px] font-serif font-semibold">Description: </span>
+                                                                        <span className="text-[17px] font-sans font-semibold">{pdf.description}</span>
+                                                                    </div>
+            
+                                                                    <div>
+                                                                        <span className="text-[17px] font-serif font-semibold">Author: </span>
+                                                                        <span className="text-[17px] font-sans font-semibold">{pdf.author}</span>
+                                                                    </div>
+            
+                                                                    <div>
+                                                                        <span className="text-[17px] font-serif font-semibold">Upload by: </span>
+                                                                        <span className="text-[17px] font-sans font-semibold text-blue-700">{pdf.uploadedBy.username}</span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-    
-                                                            <div className='overflow-y-auto max-h-[75] scroll-hide scrollable'>
-                                                                <span className="text-[17px] font-serif font-semibold">Description: </span>
-                                                                <span className="text-[17px] font-sans font-semibold">{pdf.description}</span>
-                                                            </div>
-    
-                                                            <div>
-                                                                <span className="text-[17px] font-serif font-semibold">Author: </span>
-                                                                <span className="text-[17px] font-sans font-semibold">{pdf.author}</span>
-                                                            </div>
-    
-                                                            <div>
-                                                                <span className="text-[17px] font-serif font-semibold">Upload by: </span>
-                                                                <span className="text-[17px] font-sans font-semibold text-blue-700">{pdf.uploadedBy.username}</span>
-                                                            </div>
-                                                        </div>
+                                                        </motion.div>
                                                     </div>
-                                                </motion.div>
+                                                ))  
+                                            }
+                                        </div>
+                                    ) : (
+                                        <div className="h-[45vh] flex justify-center items-center">
+                                            <div className="text-[16px] text-slate-500 font-semibold flex flex-col items-center gap-2">
+                                                <div className="p-3 border-[3.5px] border-slate-500 rounded-full"><FolderOpen strokeWidth={2} size={40} /></div>
+                                                <span>No Uploaded PDFs</span>
                                             </div>
-                                        ))  
-                                    }
-                                </div>
+                                        </div>
+                                    )
+                                }
                             </section>
                         </motion.div>
                     )

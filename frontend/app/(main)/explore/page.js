@@ -12,7 +12,7 @@ const explorePage = () => {
         <div className='flex flex-col items-center'>
             <motion.div initial={{ opacity: 0, x: -70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="text-center mt-10">
               <h1 className="text-3xl lg:text-4xl font-bold">Explore PDFs</h1>
-              <p className="text-gray-500 mt-2 text-[15px] lg:text-[17px] font-medium">
+              <p className="text-gray-500 mt-2 text-[15px] lg:text-[17px] font-medium p-3">
                 Discover recently uploaded documents from our community.
               </p>
             </motion.div>
