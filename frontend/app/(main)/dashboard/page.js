@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import AIOrb from '@/components/AiAnimatedLogo'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const Dashboardpage = () => {
     const [activeButton, setActiveButton] = useState("upload");
@@ -347,9 +348,10 @@ const Dashboardpage = () => {
                             <p className='text-sm text-slate-300'>Editing will update it, while deleting will remove it permanently.</p>
                         </div>
 
-                        <div className='flex gap-3'>
-                            <Button onClick={()=>setPdfAction("editPdf")} className='cursor-pointer'>Edit PDF</Button>
-                            <Button onClick={()=>setPdfAction("deletePdf")} className='cursor-pointer'>Delete PDF</Button>
+                        <div className='flex justify-center items-center flex-wrap gap-3'>
+                            <Button onClick={()=>setPdfAction("editPdf")} className='cursor-pointer hover:text-green-500 hover:scale-105 duration-300'>Edit PDF</Button>
+                            <Button onClick={()=>setPdfAction("deletePdf")} className='cursor-pointer hover:text-red-500 hover:scale-105 duration-300'>Delete PDF</Button>
+                            <Link href={`/pdf/${selectedPdf?.id}`}><Button className='cursor-pointer hover:text-blue-700 hover:scale-105 duration-300'>View PDF</Button></Link>
                         </div>
                     </div>
                   </DialogContent>
