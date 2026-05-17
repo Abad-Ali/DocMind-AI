@@ -30,7 +30,7 @@ const LeftSideBar = () => {
     router.push(path)
   }
   return (
-    <motion.nav initial={{ opacity: 0, x: -50 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='fixed top-2 lg:top-0.5 lg:bottom-0.5 z-20 bg-black/90 backdrop-blur-lg border-x-2 border-slate-500/70 flex lg:justify-center w-[90vw] sm:w-[95vw] lg:w-[17rem] px-3 lg:px-0 py-2.5 lg:py-0 rounded-2xl lg:rounded-none backdrop-brightness-200'>
+    <motion.nav initial={{ opacity: 0, x: -50 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='fixed top-2 lg:top-0.5 lg:bottom-0.5 z-20 bg-black/20 lg:bg-black/90 backdrop-blur-lg border-x-2 border-slate-500/70 flex lg:justify-center w-[95vw] lg:w-[17rem] px-3 lg:px-0 py-2.5 lg:py-0 rounded-2xl lg:rounded-none backdrop-brightness-200'>
         <div className='flex justify-evenly lg:justify-start w-full lg:flex-col'>
             <Link href='/' className='lg:mt-7 text-center flex justify-center items-center gap-1 lg:flex-col'>
                 <div className='flex justify-center items-center'><div className='w-10 h-10 lg:h-25 lg:w-25'><Image src='/logo2.png' alt='logo' height={90} width={90}/></div></div>
