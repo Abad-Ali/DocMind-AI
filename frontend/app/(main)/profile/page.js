@@ -208,7 +208,7 @@ const profilePage = () => {
                         <Button onClick={()=>router.push('/profile/edit')} className='!px-12 !py-5 font-bold cursor-pointer w-full'><Edit strokeWidth={3}/>Edit Profile</Button>
                         <Button onClick={logoutHandler} className='!px-12 !py-5 font-bold cursor-pointer w-full hover:text-red-500'><LogOutIcon strokeWidth={3}/>Log Out</Button>
                       </div>
-                      <p className='text-slate-950 flex gap-1 items-center justify-center mt-2'><InfoIcon size={15}/>Admin key required to become Admin</p>
+                      <p className='text-slate-500 flex gap-1 items-center justify-center mt-2'><InfoIcon size={15}/>Admin key required to become Admin</p>
                     </div>
                   </DialogContent>
                 )
