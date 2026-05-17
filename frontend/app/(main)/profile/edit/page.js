@@ -79,7 +79,7 @@ const editProfilepage = () => {
       }
     }
   return (
-    <div className='lg:pl-64 h-screen flex justify-center items-center my-10 lg:my-0 pt-[15vh]'>
+    <div className='lg:pl-64 h-screen flex justify-center items-center my-10 lg:my-0 pt-[13vh] pb-5'>
       <div className='flex flex-col justify-center items-center'>
         <div className='w-[85vw] sm:w-[70vw] lg:w-3xl flex flex-col sm:flex-row border-2 border-slate-200/10 rounded-2xl'>
           <motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='w-full sm:w-1/2 md:w-1/3 bg-slate-950 backdrop-brightness-200 text-white pt-8 sm:pt-0 p-5 sm:p-8 flex flex-col items-center justify-center relative overflow-hidden rounded-t-2xl sm:rounded-l-2xl'>
