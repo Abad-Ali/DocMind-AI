@@ -119,10 +119,10 @@ const profilePage = () => {
 
   if (!user || !userProfile) {
     return <div className="h-screen flex justify-center items-center lg:pl-64 pt-[10vh] text-white">
-       <div className='flex gap-1'>
-        <Loader2Icon className='animate-spin'/>Loading profile...
-       </div>
-      </div>;
+      <div className='flex gap-1'>
+       <Loader2Icon className='animate-spin'/>Loading profile...
+      </div>
+    </div>;
   }
   return (
     <div className='lg:pl-64 pt-[10vh] text-white min-h-screen'>

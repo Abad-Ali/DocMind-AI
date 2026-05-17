@@ -13,7 +13,11 @@ const PDFpage = () => {
     useGetPDF(paramsId);
 
     const {pdf} = useSelector(store=>store.pdf)
-    if (!pdf) return <div>Loading...</div>;
+    if (!pdf) return <div className="h-screen flex justify-center items-center lg:pl-64 pt-[10vh] text-white">
+      <div className='flex gap-1'>
+       <Loader2Icon className='animate-spin'/>Loading Pdf...
+      </div>
+    </div>;
   return (
     <div className='flex justify-center items-center min-h-screen'>
       <div className='flex justify-center items-center mt-0.5'><PDFViewer url={pdf.fileUrl} pdfId={paramsId}/></div>
