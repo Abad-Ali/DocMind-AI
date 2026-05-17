@@ -2,6 +2,7 @@
 import AiBar from '@/components/AiBar';
 import PDFViewer from '@/components/PDFViewer';
 import useGetPDF from '@/hooks/useGetPDF';
+import { Loader2Icon } from 'lucide-react';
 import { useParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
