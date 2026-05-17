@@ -158,7 +158,7 @@ export default function PDFViewer({ url, pdfId }) {
           </div> */}
         </Document>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-5 sm:mb-0">
         <FeatureBar show={show} pdfId={pdfId} />
       </div>
     </motion.div>

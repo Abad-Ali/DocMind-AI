@@ -151,7 +151,7 @@ const profilePage = () => {
             </div>
 
             <div className='flex flex-col justify-center items-center sm:items-start'>
-                <motion.div initial={{ opacity: 0, x: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='text-3xl sm:text-4xl font-serif font-bold flex items-center gap-2'>
+                <motion.div initial={{ opacity: 0, x: 70 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='text-4xl font-serif font-bold flex items-center gap-2'>
                     @{userProfile.username}
 
                     <Badge className='font-bold'>{userProfile.role}</Badge>
@@ -171,10 +171,10 @@ const profilePage = () => {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true, amount: 0.5 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className='flex flex-wrap justify-center gap-3 mt-5'>
-            <Button onClick={()=>router.push('/profile/edit')} className='!px-10 lg:!px-12 !py-5 font-bold cursor-pointer'><Edit strokeWidth={3}/>Edit Profile</Button>
+            <Button onClick={()=>router.push('/profile/edit')} className='sm:!px-10 lg:!px-12 !py-5 font-bold cursor-pointer'><Edit strokeWidth={3}/>Edit Profile</Button>
             {
               userProfile.role === 'admin' ? (
-                <Button onClick={()=>router.push('/dashboard')} className='!px-10 lg:!px-12 !py-5 mx-2 font-bold cursor-pointer'><LayoutDashboard strokeWidth={3}/>Dashboard</Button>
+                <Button onClick={()=>router.push('/dashboard')} className='sm:!px-10 lg:!px-12 !py-5 mx-2 font-bold cursor-pointer'><LayoutDashboard strokeWidth={3}/>Dashboard</Button>
               ):(
                 <div></div>
               )
@@ -182,7 +182,7 @@ const profilePage = () => {
 
             <Dialog>
               <DialogTrigger asChild>
-                <Button onClick={()=>setActiveButton('settings')} className='!px-10 lg:!px-12 !py-5 font-bold cursor-pointer'><Settings strokeWidth={3}/>Settings</Button>
+                <Button onClick={()=>setActiveButton('settings')} className='sm:!px-10 lg:!px-12 !py-5 font-bold cursor-pointer'><Settings strokeWidth={3}/>Settings</Button>
               </DialogTrigger>
               {
                 activeButton === 'settings' && (
@@ -199,10 +199,10 @@ const profilePage = () => {
                         </div>
                       </div>
                       <div className='flex flex-col gap-1 mt-3'>
-                        <Button onClick={()=>setActiveButton('changePassword')} className='!px-10 sm:!px-12 !py-4 sm:!py-5 font-bold cursor-pointer w-full'><KeySquare strokeWidth={3}/>Change Password</Button>
-                        <Button onClick={()=>setActiveButton('becomeAdmin')} className='!px-10 sm:!px-12 !py-4 sm:!py-5 font-bold cursor-pointer w-full'><LucideCrown strokeWidth={3}/>Become Admin</Button>
-                        <Button onClick={()=>router.push('/profile/edit')} className='!px-10 sm:!px-12 !py-4 sm:!py-5 font-bold cursor-pointer w-full'><Edit strokeWidth={3}/>Edit Profile</Button>
-                        <Button onClick={logoutHandler} className='!px-10 sm:!px-12 !py-4 sm:!py-5 font-bold cursor-pointer w-full hover:text-red-500'><LogOutIcon strokeWidth={3}/>Log Out</Button>
+                        <Button onClick={()=>setActiveButton('changePassword')} className='!px-12 !py-5 font-bold cursor-pointer w-full'><KeySquare strokeWidth={3}/>Change Password</Button>
+                        <Button onClick={()=>setActiveButton('becomeAdmin')} className='!px-12 !py-5 font-bold cursor-pointer w-full'><LucideCrown strokeWidth={3}/>Become Admin</Button>
+                        <Button onClick={()=>router.push('/profile/edit')} className='!px-12 !py-5 font-bold cursor-pointer w-full'><Edit strokeWidth={3}/>Edit Profile</Button>
+                        <Button onClick={logoutHandler} className='!px-12 !py-5 font-bold cursor-pointer w-full hover:text-red-500'><LogOutIcon strokeWidth={3}/>Log Out</Button>
                       </div>
                       <p className='text-slate-950 flex gap-1 items-center justify-center mt-2'><InfoIcon size={15}/>Admin key required to become Admin</p>
                     </div>
