@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ReduxProvider } from './provider';  // Client Component
+import ProtectedAuth from "@/components/ProtectedAuth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
+          <ProtectedAuth>
           <div className="min-h-screen w-full relative bg-black text-white">
             {/* Background gradient */}
             <div
@@ -64,6 +66,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
           <Toaster/>
+          </ProtectedAuth>
         </ReduxProvider>
       </body>
     </html>

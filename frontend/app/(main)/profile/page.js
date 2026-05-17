@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useDispatch, useSelector } from 'react-redux';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { BookMarkedIcon, BookmarkXIcon, Edit, InfoIcon, KeySquare, LayoutDashboard, Loader2, LogOutIcon, LucideCrown, Settings, SettingsIcon, ShieldCheck } from 'lucide-react';
+import { BookMarkedIcon, BookmarkXIcon, Edit, InfoIcon, KeySquare, LayoutDashboard, Loader2, Loader2Icon, LogOutIcon, LucideCrown, Settings, SettingsIcon, ShieldCheck } from 'lucide-react';
 import useGetUserProfile from '@/hooks/useGetUserProfile';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -118,7 +118,11 @@ const profilePage = () => {
   }
 
   if (!user || !userProfile) {
-    return <div className="pl-64 pt-[10vh] text-white">Loading profile...</div>;
+    return <div className="h-screen flex justify-center items-center lg:pl-64 pt-[10vh] text-white">
+       <div className='flex gap-1'>
+        <Loader2Icon className='animate-spin'/>Loading profile...
+       </div>
+      </div>;
   }
   return (
     <div className='lg:pl-64 pt-[10vh] text-white min-h-screen'>
