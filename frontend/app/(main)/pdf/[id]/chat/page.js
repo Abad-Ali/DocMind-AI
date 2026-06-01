@@ -148,7 +148,7 @@ const Chatpage = () => {
   }, [messages]);
 
   return (
-    <div className='relative lg:pl-67 h-screen w-full border-l-2 border-slate-500 py-1 text-white flex flex-col overflow-hidden bg-black/10 backdrop-blur-xs backdrop-brightness-200 pb-2 lg:pb-0'>
+    <div className='relative lg:pl-67 h-screen w-full py-1 text-white flex flex-col overflow-hidden bg-black/10 backdrop-blur-xs backdrop-brightness-200 pb-2 lg:pb-0'>
 
       <motion.div initial={{ opacity: 0, y: 20 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className='flex items-center'>
         <Link href={`/pdf/${pdfId}`}><div className='pl-3 text-slate-100 cursor-pointer hover:text-blue-700 duration-300'>

@@ -68,13 +68,13 @@ const searchPage = () => {
           </div>
         
           <motion.div initial={{ opacity: 0, y: 30 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }} className="flex justify-center mt-2 mb-3">
-                <form onSubmit={searchHandle} className="relative  w-[60vw] lg:w-sm mt-5 mb-10">
+                <form onSubmit={searchHandle} className="relative  w-[80vw] lg:w-sm mt-5 mb-10">
                   <Input ref={inputRef} name='title' value={input.title} onChange={handleChange} placeholder="Search PDFs using title" className="pr-10 rounded-full bg-white text-black font-semibold italic border-2 border-blue-700 py-5"/>
                   <button disabled={loading} type='submit' className="absolute right-3 top-1/2 -translate-y-1/2"><SearchIcon className="h-4 w-4 text-blue-700" strokeWidth={3}/></button>
                 </form>
           </motion.div>
         
-          <motion.div initial={{ opacity: 0, y: 40 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}  className='bg-black/10 backdrop-blur-xs backdrop-brightness-200 p-3 rounded-lg w-[70vw] lg:w-2xl border-2 border-slate-500'>
+          <motion.div initial={{ opacity: 0, y: 40 }} viewport={{ once: true }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}  className='bg-black/10 backdrop-blur-xs backdrop-brightness-200 p-3 rounded-lg w-[80vw] lg:w-2xl border-2 border-slate-500'>
             <div className='flex flex-wrap justify-between text-slate-300'>
               <span className='font-semibold'>Search Results : ({results.length})</span>
               <span onClick={cleanSearch} className='font-semibold flex gap-1 cursor-pointer hover:text-blue-700'><BrushCleaningIcon size={20}/>Clean</span>
